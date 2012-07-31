@@ -4,6 +4,8 @@ module Alf
     class Base < Sinatra::Base
       include DatabaseMethods
 
+      set :database, ::Alf::Database
+
       def self.relvar(url = nil, options = {})
         url, options = nil, url if url.is_a?(Hash)
 
