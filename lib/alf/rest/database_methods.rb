@@ -7,7 +7,7 @@ module Alf
       end
 
       def with_connection(&bl)
-        Alf.connect(adapter, &bl)
+        (settings.database || Alf).connect(adapter, &bl)
       end
 
       def restrict_relvar(rv, id)
