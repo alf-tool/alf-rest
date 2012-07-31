@@ -6,6 +6,7 @@ require 'json'
 
 require 'alf'
 require 'alf-rest'
+require 'alf/rest/test'
 require 'alf-sequel'
 
 def app
@@ -18,5 +19,5 @@ def app
 end
 
 def client
-  @client ||= Client.new(app)
+  @client ||= Alf::Rest::Test::Client.new(app)
 end
