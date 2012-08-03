@@ -8,6 +8,5 @@ module Alf
 
   end
 end
-require_relative 'rest/route_spec'
-require_relative 'rest/database_methods'
+require_relative 'rest/agent'
 require_relative 'rest/base'

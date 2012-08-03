@@ -3,7 +3,6 @@ module Alf
     module Test
       class Client
         include ::Rack::Test::Methods
-        include DatabaseMethods
 
         def initialize(app)
           @app = app
@@ -20,6 +19,12 @@ module Alf
 
         def loaded_body
           JSON::load(last_response.body)
+        end
+
+        def with_relvar(*args, &bl)
+          app.settings.database.connect(app.settings.adapter) do |db|
+            yield(db.relvar(*args))
+          end
         end
 
         [:get, :patch, :put, :post, :delete].each do |m|

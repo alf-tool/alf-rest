@@ -26,6 +26,12 @@ module Alf
         end
         attr_writer :restriction
 
+        [ :eq, :neq, :gt, :gte, :lt, :lte, :in, :comp ].each do |m|
+          define_method(m) do |*args|
+            self.restriction &= Alf::Predicate.send(m, *args)
+          end
+        end
+
         def primary_key_equal(id)
           with_relvar do |rv|
             unless key = rv.keys.first

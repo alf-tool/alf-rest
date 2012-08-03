@@ -1,8 +1,52 @@
+Given /^the (.*?) relvar has the following value:$/ do |relvar,table|
+  client.with_relvar(relvar) do |rv|
+    rv.affect Relation(rv.heading.coerce(table.hashes))
+  end  
+end
+
 Given /^the following (.*?) relation is mapped under (.*):$/ do |prototype, url, table|
   client.with_relvar(prototype) do |rv|
     rv.affect Relation(rv.heading.coerce(table.hashes))
-  end  
-  app.relvar(url, :relvar => prototype.to_sym)
+  end
+  app.get(url) do
+    agent.relvar = prototype
+    agent.mode   = :relation
+    agent.get
+  end
+  app.get("#{url}/:id") do
+    agent.relvar = prototype
+    agent.mode   = :tuple
+    agent.primary_key_equal(params[:id])
+    agent.get
+  end
+  app.delete(url) do
+    agent.relvar = prototype
+    agent.mode   = :relation
+    agent.delete
+  end
+  app.delete("#{url}/:id") do
+    agent.relvar = prototype
+    agent.mode   = :tuple
+    agent.primary_key_equal(params[:id])
+    agent.delete
+  end
+  app.post(url) do
+    agent.relvar = prototype
+    agent.mode   = :relation
+    agent.post
+  end
+  app.patch("#{url}/:id") do
+    agent.relvar = prototype
+    agent.mode   = :tuple
+    agent.primary_key_equal(params[:id])
+    agent.patch
+  end
+  app.put("#{url}/:id") do
+    agent.relvar = prototype
+    agent.mode   = :tuple
+    agent.primary_key_equal(params[:id])
+    agent.patch
+  end
 end
 
 Given /^the JSON body of the next request is the following (.*?) tuple:$/ do |prototype,table|
@@ -55,6 +99,13 @@ Then /^a decoded (.*?) relation should equal:$/ do |prototype,expected|
     expected = Relation(rv.heading.coerce(expected.hashes))
     body.should eq(expected)
   end
+end
+
+Then /^a decoded relation should be (.*?)$/ do |expected|
+  client.with_relvar(expected) do |rv|
+    body = Relation(rv.heading.coerce(client.loaded_body))
+    body.should eq(rv.value)
+  end  
 end
 
 Then /^a decoded (.*?) relation should be empty$/ do |prototype|
