@@ -21,8 +21,12 @@ module Alf
           JSON::load(last_response.body)
         end
 
+        def with_db(&bl)
+          app.settings.database.connect(app.settings.adapter, &bl)
+        end
+
         def with_relvar(*args, &bl)
-          app.settings.database.connect(app.settings.adapter) do |db|
+          with_db do |db|
             yield(db.relvar(*args))
           end
         end

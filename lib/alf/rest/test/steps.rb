@@ -1,7 +1,7 @@
 Given /^the (.*?) relvar has the following value:$/ do |relvar,table|
   client.with_relvar(relvar) do |rv|
     rv.affect Relation(rv.heading.coerce(table.hashes))
-  end  
+  end
 end
 
 Given /^the following (.*?) relation is mapped under (.*):$/ do |prototype, url, table|
