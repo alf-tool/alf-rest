@@ -95,8 +95,8 @@ end
 
 Then /^a decoded (.*?) relation should equal:$/ do |prototype,expected|
   client.with_relvar(prototype) do |rv|
-    body     = Relation(rv.heading.coerce(client.loaded_body))
     expected = Relation(rv.heading.coerce(expected.hashes))
+    body     = Relation(rv.heading.coerce(client.loaded_body)).project(expected.attribute_list)
     body.should eq(expected)
   end
 end
