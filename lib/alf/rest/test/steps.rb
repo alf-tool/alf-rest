@@ -52,6 +52,10 @@ Given /^the following (.*?) relation is mapped under (.*):$/ do |prototype, url,
   end
 end
 
+Given /^the JSON body of the next request is the following tuple:$/ do |table|
+  client.json_body = table.hashes.first
+end
+
 Given /^the JSON body of the next request is the following (.*?) tuple:$/ do |prototype,table|
   client.with_relvar(prototype) do |rv|
     client.json_body = rv.heading.coerce(table.hashes.first)
@@ -90,8 +94,8 @@ end
 
 Then /^a decoded (.*?) tuple should equal:$/ do |prototype,expected|
   client.with_relvar(prototype) do |rv|
-    body = rv.heading.coerce(client.loaded_body)
-    expected = rv.heading.coerce(expected.hashes.first)
+    expected = Relation(rv.heading.coerce(expected.hashes.first))
+    body     = Relation(rv.heading.coerce(client.loaded_body)).project(expected.attribute_list)
     body.should eq(expected)
   end
 end
