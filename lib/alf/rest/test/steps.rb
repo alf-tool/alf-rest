@@ -33,18 +33,21 @@ Given /^the following (.*?) relation is mapped under (.*):$/ do |prototype, url,
   app.post(url) do
     agent.relvar = prototype
     agent.mode   = :relation
+    agent.body   = JSON.parse(request.body.read) rescue halt(400)
     agent.post
   end
   app.patch("#{url}/:id") do
     agent.relvar = prototype
     agent.mode   = :tuple
     agent.primary_key_equal(params[:id])
+    agent.body   = JSON.parse(request.body.read) rescue halt(400)
     agent.patch
   end
   app.put("#{url}/:id") do
     agent.relvar = prototype
     agent.mode   = :tuple
     agent.primary_key_equal(params[:id])
+    agent.body   = JSON.parse(request.body.read) rescue halt(400)
     agent.patch
   end
 end

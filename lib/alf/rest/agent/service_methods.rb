@@ -12,7 +12,7 @@ module Alf
         def post
           raise NotSupportedError unless mode==:relation
           with_restricted_relvar do |rv|
-            tuples  = JSON.parse(request.body.read) rescue halt(400)
+            tuples  = self.body
             ids     = rv.insert(tuples)
             created = rv.restrict(Predicate.coerce(ids))
             created = created.tuple_extract if tuples.is_a?(Hash)
@@ -24,7 +24,7 @@ module Alf
 
         def delete
           with_restricted_relvar do |rv|
-            rv.tuple_extract if mode==:tuple # will raise if not existing
+            rv.tuple_extract if mode==:tuple
             rv.delete 
           end
           204
@@ -33,9 +33,8 @@ module Alf
         def patch
           raise NotSupportedError unless mode==:tuple
           with_restricted_relvar do |rv|
-            attrs = JSON.parse(request.body.read) rescue halt(400)
-            rv.tuple_extract # to be sure that the tuple exists
-            rv.update(attrs)
+            rv.tuple_extract
+            rv.update(self.body)
             serve rv.tuple_extract
           end
         end

@@ -6,6 +6,7 @@ module Alf
         # :tuple or :relation mode?
         attr_accessor :mode
 
+        # The relation variable we are going to touch
         def relvar=(rv)
           @relvar = rv.is_a?(Alf::Relvar) ? rv : db.relvar(rv)
         end
@@ -21,6 +22,7 @@ module Alf
           end
         end
 
+        # Restriction predicate on relvar
         def restriction
           @restriction ||= Predicate.tautology
         end
@@ -50,6 +52,9 @@ module Alf
             self.restriction &= predicate
           end
         end
+
+        # The insert/update body for PUT/PATCH/POST
+        attr_accessor :body
 
       end # module ServiceMethods
     end # class Agent
