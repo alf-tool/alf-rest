@@ -117,3 +117,7 @@ Then /^a decoded (.*?) relation should be empty$/ do |prototype|
     body.should be_empty
   end
 end
+
+Then /^the body contains "(.*?)"$/ do |expected|
+  client.last_response.body.should match(Regexp.compile(Regexp.escape(expected)))
+end
