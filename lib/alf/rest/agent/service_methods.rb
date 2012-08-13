@@ -12,10 +12,20 @@ module Alf
         def post
           raise NotSupportedError unless mode==:relation
           with_restricted_relvar do |rv|
-            tuples  = self.body
+            single  = self.body.is_a?(Hash)
+
+            # project tuples and coerce them
+            tuples  = Relation(self.body)
+            attrs   = rv.heading.to_attr_list & tuples.attribute_list
+            tuples  = tuples.project(attrs)
+            tuples  = tuples.coerce(rv.heading.project(attrs))
+
+            # insert them
             ids     = rv.insert(tuples)
+
+            # get created tuples
             created = rv.restrict(Predicate.coerce(ids))
-            created = created.tuple_extract if tuples.is_a?(Hash)
+            created = created.tuple_extract if single
 
             app.status 201
             serve created
