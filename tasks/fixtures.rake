@@ -1,6 +1,6 @@
 task :fixtures do
   puts "Building fixtures, please wait..."
-  require 'epath'
+  require 'path'
   require "sequel"
   require "sqlite3"
   require 'alf'

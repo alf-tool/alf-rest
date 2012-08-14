@@ -1,4 +1,4 @@
-require 'epath'
+require 'path'
 $:.unshift Path.backfind('./lib').to_s
 
 require 'rack/test'
