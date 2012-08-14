@@ -92,36 +92,52 @@ Then /^the body should be a JSON object$/ do
   client.loaded_body.should be_a(Hash)
 end
 
+Then /^the body contains "(.*?)"$/ do |expected|
+  client.last_response.body.should match(Regexp.compile(Regexp.escape(expected)))
+end
+
 Then /^a decoded (.*?) tuple should equal:$/ do |prototype,expected|
   client.with_relvar(prototype) do |rv|
     expected = Relation(rv.heading.coerce(expected.hashes.first))
-    body     = Relation(rv.heading.coerce(client.loaded_body)).project(expected.attribute_list)
-    body.should eq(expected)
+    @decoded = Relation(rv.heading.coerce(client.loaded_body))
+    @decoded.project(expected.attribute_list).should eq(expected)
   end
 end
 
 Then /^a decoded (.*?) relation should equal:$/ do |prototype,expected|
   client.with_relvar(prototype) do |rv|
     expected = Relation(rv.heading.coerce(expected.hashes))
-    body     = Relation(rv.heading.coerce(client.loaded_body)).project(expected.attribute_list)
-    body.should eq(expected)
+    @decoded = Relation(rv.heading.coerce(client.loaded_body))
+    @decoded.project(expected.attribute_list).should eq(expected)
   end
 end
 
 Then /^a decoded relation should be (.*?)$/ do |expected|
   client.with_relvar(expected) do |rv|
-    body = Relation(rv.heading.coerce(client.loaded_body))
-    body.should eq(rv.value)
+    @decoded = Relation(rv.heading.coerce(client.loaded_body))
+    @decoded.should eq(rv.value)
   end  
 end
 
 Then /^a decoded (.*?) relation should be empty$/ do |prototype|
   client.with_relvar(prototype) do |rv|
-    body = Relation(rv.heading.coerce(client.loaded_body))
-    body.should be_empty
+    @decoded = Relation(rv.heading.coerce(client.loaded_body))
+    @decoded.should be_empty
   end
 end
 
-Then /^the body contains "(.*?)"$/ do |expected|
-  client.last_response.body.should match(Regexp.compile(Regexp.escape(expected)))
+Then /^the size of a decoded relation should be (\d+)$/ do |size|
+  @decoded = Relation(client.loaded_body)
+  @decoded.size.should eq(Integer(size))
+end
+
+Then /^its (.*?) rva should equal:$/ do |rva,expected|
+  decoded  = @decoded.tuple_extract[rva.to_sym]
+  expected = Relation(decoded.heading.coerce(expected.hashes))
+  decoded.project(expected.attribute_list).should eq(expected)
+end
+
+Then /^its (.*?) rva should be empty$/ do |rva|
+  tuple = @decoded.tuple_extract
+  tuple[rva.to_sym].should be_empty
 end
