@@ -3,7 +3,7 @@ module Alf
   module Rest
     class Base < Sinatra::Base
 
-      set :database, ::Alf::Database
+      set :database, ::Alf::Schema.native
 
       def self.with_database(&bl)
         settings.database.connect(settings.adapter, &bl)
