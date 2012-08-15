@@ -132,7 +132,7 @@ Then /^the size of a decoded relation should be (\d+)$/ do |size|
 end
 
 Then /^its (.*?) rva should equal:$/ do |rva,expected|
-  decoded  = @decoded.tuple_extract[rva.to_sym]
+  decoded  = Relation(@decoded.tuple_extract[rva.to_sym])
   expected = Relation(decoded.heading.coerce(expected.hashes))
   decoded.project(expected.attribute_list).should eq(expected)
 end
