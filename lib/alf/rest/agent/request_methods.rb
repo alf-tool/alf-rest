@@ -28,7 +28,7 @@ module Alf
         end
         attr_writer :restriction
 
-        [ :eq, :neq, :gt, :gte, :lt, :lte, :in, :comp ].each do |m|
+        [ :eq, :neq, :gt, :gte, :lt, :lte, :in, :comp, :between ].each do |m|
           define_method(m) do |*args|
             self.restriction &= Alf::Predicate.send(m, *args)
           end
