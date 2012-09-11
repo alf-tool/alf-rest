@@ -27,6 +27,8 @@ module Alf
             created = rv.restrict(Predicate.coerce(ids))
             created = created.tuple_extract if single
 
+            yield(created) if block_given?
+
             app.status 201
             serve created
           end
