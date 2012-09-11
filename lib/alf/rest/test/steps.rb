@@ -1,3 +1,9 @@
+Given /^the (.*?) relvar is empty$/ do |relvar|
+  client.with_relvar(relvar) do |rv|
+    rv.delete
+  end
+end
+
 Given /^the (.*?) relvar has the following value:$/ do |relvar,table|
   client.with_relvar(relvar) do |rv|
     rv.affect Relation(rv.heading.coerce(table.hashes))
@@ -54,6 +60,13 @@ end
 
 Given /^the JSON body of the next request is the following tuple:$/ do |table|
   client.json_body = table.hashes.first
+end
+
+Given /^the JSON body has the following (.*?) attribute (.*?):$/ do |attrname,prototype,table|
+  client.json_body ||= {}
+  client.with_relvar(prototype) do |rv|
+    client.json_body[attrname.to_sym] = rv.heading.coerce(table.hashes)
+  end
 end
 
 Given /^the JSON body of the next request is the following (.*?) tuple:$/ do |prototype,table|

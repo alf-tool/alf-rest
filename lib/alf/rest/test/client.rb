@@ -13,8 +13,12 @@ module Alf
           app.settings
         end
 
+        def json_body
+          @body
+        end
+
         def json_body=(body)
-          @body = JSON.dump(body)
+          @body = body
         end
 
         def loaded_body
@@ -33,7 +37,7 @@ module Alf
 
         [:get, :patch, :put, :post, :delete].each do |m|
           define_method(m) do |*args, &bl|
-            args << @body if @body
+            args << JSON.dump(@body) if @body
             super(*args, &bl)
           end
         end
