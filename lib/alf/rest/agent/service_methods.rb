@@ -27,11 +27,11 @@ module Alf
             created = rv.restrict(Predicate.coerce(ids))
             created = created.tuple_extract if single
 
-            # yield if requested
-            yield(created) if block_given?
-
             # sets the location
             set_location(created)
+
+            # yield if requested
+            yield(created) if block_given?
 
             # serve now
             app.status 201

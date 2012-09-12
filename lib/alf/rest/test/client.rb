@@ -41,6 +41,7 @@ module Alf
 
         [:get, :patch, :put, :post, :delete].each do |m|
           define_method(m) do |url, &bl|
+            url ||= ""
             url += (url =~ /\?/ ? "&" : "?")
             url += URI.escape(@default_parameters.map{|k,v| "#{k}=#{v}"}.join('&')) if @default_parameters
             args = [url]

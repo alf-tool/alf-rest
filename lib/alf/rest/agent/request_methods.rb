@@ -54,14 +54,14 @@ module Alf
         attr_accessor :body
 
         # The location generator to use
-        def locator=(locator, key=nil)
+        def locator=(locator)
           case locator
           when Proc
             @locator = locator
           when String
             @locator = lambda{|tuple|
               if tuple.is_a?(Hash)
-                key ||= with_relvar{|rv| first_key!(rv)}.to_a
+                key = with_relvar{|rv| first_key!(rv)}.to_a
                 val = key.map{|attr| tuple[attr]}.join(",")
                 "#{locator}/#{val}"
               end
