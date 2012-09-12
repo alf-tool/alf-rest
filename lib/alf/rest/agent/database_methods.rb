@@ -4,11 +4,7 @@ module Alf
       module DatabaseMethods
 
         def db
-          @db ||= settings.database.connect(settings.adapter)
-        end
-
-        def disconnect
-          @db.disconnect if @db
+          app.db
         end
 
       end # module DatabaseMethods

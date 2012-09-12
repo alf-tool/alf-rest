@@ -5,8 +5,8 @@ module Alf
 
       set :database, ::Alf::Schema.native
 
-      def self.with_database(&bl)
-        settings.database.connect(settings.adapter, &bl)
+      def db
+        @database ||= settings.database.connect(settings.adapter)
       end
 
       def agent
@@ -14,7 +14,7 @@ module Alf
       end
 
       # Disconnect the database connection at end
-      after{ @agent.disconnect if @agent }
+      after{ @database.disconnect if @database }
 
       error Alf::NoSuchRelvarError,
             Alf::NoSuchTupleError,
