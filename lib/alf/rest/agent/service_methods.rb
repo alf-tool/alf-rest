@@ -30,6 +30,9 @@ module Alf
             # yield if requested
             yield(created) if block_given?
 
+            # sets the location
+            set_location(created)
+
             # serve now
             app.status 201
             serve created
@@ -65,6 +68,9 @@ module Alf
             # yield if requested
             yield(updated) if block_given?
 
+            # sets the location
+            set_location(updated)
+
             # serve now
             app.status 200
             serve updated
@@ -73,6 +79,13 @@ module Alf
         alias :put :patch
 
       private
+
+        def set_location(tuple)
+          return unless l = locator
+          if location = l.call(tuple)
+            app.headers("Location" => location)
+          end
+        end
 
         def serve(data)
           app.content_type :json

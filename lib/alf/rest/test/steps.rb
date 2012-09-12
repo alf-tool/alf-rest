@@ -93,6 +93,10 @@ Then /^the content type should be (.*)$/ do |ct|
   client.last_response.content_type.should =~ Regexp.new(Regexp.escape(ct))
 end
 
+Given /^I follow the specified Location$/ do
+  client.get(client.last_response.location)
+end
+
 Then /^the body should be a JSON array$/ do
   client.loaded_body.should be_a(Array)
 end

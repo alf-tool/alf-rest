@@ -36,10 +36,7 @@ module Alf
 
         def primary_key_equal(id)
           with_relvar do |rv|
-            unless key = rv.keys.first
-              raise MappingError, "No keys found on `#{Tools.to_lispy(rv.expr)}`"
-            end
-            if key.size > 1
+            if (key = first_key!(rv)).size > 1
               id = id.split(',')
               raise KeyMismatch unless id.size == key.size
             end
@@ -55,6 +52,34 @@ module Alf
 
         # The insert/update body for PUT/PATCH/POST
         attr_accessor :body
+
+        # The location generator to use
+        def locator=(locator, key=nil)
+          case locator
+          when Proc
+            @locator = locator
+          when String
+            @locator = lambda{|tuple|
+              if tuple.is_a?(Hash)
+                key ||= with_relvar{|rv| first_key!(rv)}.to_a
+                val = key.map{|attr| tuple[attr]}.join(",")
+                "#{locator}/#{val}"
+              end
+            }
+          when NilClass
+            @locator = locator
+          end
+        end
+        attr_reader :locator
+
+      private
+
+        def first_key!(rv)
+          unless key = rv.keys.first
+            raise MappingError, "No keys found on `#{Tools.to_lispy(rv.expr)}`"
+          end
+          key
+        end
 
       end # module ServiceMethods
     end # class Agent
