@@ -39,7 +39,8 @@ module Alf
         def delete
           with_restricted_relvar do |rv|
             rv.tuple_extract if mode==:tuple
-            rv.delete 
+            rv.delete
+            yield if block_given?
           end
           204
         end
