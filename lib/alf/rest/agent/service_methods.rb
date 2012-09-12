@@ -27,8 +27,10 @@ module Alf
             created = rv.restrict(Predicate.coerce(ids))
             created = created.tuple_extract if single
 
+            # yield if requested
             yield(created) if block_given?
 
+            # serve now
             app.status 201
             serve created
           end
@@ -46,8 +48,25 @@ module Alf
           raise NotSupportedError unless mode==:tuple
           with_restricted_relvar do |rv|
             rv.tuple_extract
-            rv.update(self.body)
-            serve rv.tuple_extract
+
+            # project tuple and coerce it
+            tuple = Tuple(self.body)
+            attrs   = rv.heading.to_attr_list & tuple.keys
+            tuple  = tuple.project(attrs)
+            tuple  = tuple.coerce(rv.heading.project(attrs))
+
+            # update it
+            rv.update(tuple)
+
+            # get updated tuple
+            updated = rv.tuple_extract
+
+            # yield if requested
+            yield(updated) if block_given?
+
+            # serve now
+            app.status 200
+            serve updated
           end
         end
         alias :put :patch
