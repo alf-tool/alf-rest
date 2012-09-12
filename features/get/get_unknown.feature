@@ -13,3 +13,9 @@ Feature: GET on a unknown tuple
 
     Given I make a GET on /suppliers/3
     Then the status should be 404
+
+  Scenario: GET with coercion error
+
+    Given I make a GET on /suppliers/test
+    Then the status should be 400
+    And the body contains "invalid value for Integer"

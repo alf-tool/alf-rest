@@ -22,9 +22,18 @@ module Alf
         not_found
       end
 
+      error Alf::CoercionError do |ex|
+        status 400
+        content_type "text/plain"
+        body ex.message[/\((.*)\)$/, 1]
+      end
+
       error StandardError do |ex|
-        puts ex.message
-        puts ex.backtrace.join("\n")
+        if settings.environment == :test
+          puts ex.class
+          puts ex.message
+          puts ex.backtrace.join("\n")
+        end
         if defined?(::Sequel) && ex.is_a?(::Sequel::DatabaseError)
           status 400
         else
