@@ -35,8 +35,15 @@ module Alf
           end
         end
 
+        def default_parameters(h)
+          @default_parameters = h
+        end
+
         [:get, :patch, :put, :post, :delete].each do |m|
-          define_method(m) do |*args, &bl|
+          define_method(m) do |url, &bl|
+            url += (url =~ /\?/ ? "&" : "?")
+            url += URI.escape(@default_parameters.map{|k,v| "#{k}=#{v}"}.join('&')) if @default_parameters
+            args = [url]
             args << JSON.dump(@body) if @body
             super(*args, &bl)
           end
