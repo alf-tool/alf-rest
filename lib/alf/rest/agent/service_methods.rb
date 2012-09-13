@@ -39,6 +39,12 @@ module Alf
           end
         end
 
+        def no_post(tuple)
+          app.status 303
+          set_location(tuple)
+          serve tuple
+        end
+
         def delete
           with_restricted_relvar do |rv|
             rv.tuple_extract if mode==:tuple
