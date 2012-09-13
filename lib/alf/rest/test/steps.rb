@@ -119,6 +119,10 @@ Then /^the status should be (\d+)$/ do |status|
   client.last_response.status.should eq(Integer(status))
 end
 
+Then /^the status should not be (\d+)$/ do |status|
+  client.last_response.status.should_not eq(Integer(status))
+end
+
 Then /^the content type should be (.*)$/ do |ct|
   client.last_response.content_type.should =~ Regexp.new(Regexp.escape(ct))
 end
