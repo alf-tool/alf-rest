@@ -3,6 +3,12 @@ module Alf
     class Agent
       module ServiceMethods
 
+        def assert!
+          with_restricted_relvar do |rv|
+            rv.not_empty!
+          end
+        end
+
         def get
           with_restricted_relvar do |rv|
             serve(mode==:tuple ? rv.tuple_extract : rv)
