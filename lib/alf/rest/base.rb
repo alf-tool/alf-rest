@@ -31,6 +31,10 @@ module Alf
         not_found
       end
 
+      error Alf::FactAssertionError do
+        halt 403
+      end
+
       error Alf::CoercionError do |ex|
         status 400
         content_type "text/plain"
