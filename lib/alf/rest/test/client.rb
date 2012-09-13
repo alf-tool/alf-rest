@@ -7,8 +7,18 @@ module Alf
 
         def initialize(app)
           @app = app
+          @global_parameters = {}
+          reset
         end
         attr_reader :app
+        attr_accessor :global_parameters
+        attr_accessor :json_body
+        attr_accessor :parameters
+
+        def reset
+          self.json_body  = nil
+          self.parameters = {}
+        end
 
         def with_relvar(*args, &bl)
           with_database do |db|
@@ -16,31 +26,31 @@ module Alf
           end
         end
 
-        def json_body
-          @body
-        end
-
-        def json_body=(body)
-          @body = body
-        end
-
         def loaded_body
           JSON::load(last_response.body)
         end
 
-        def default_parameters(h)
-          @default_parameters = h
+        def parameter(k, v)
+          parameters[k] = v
         end
 
         [:get, :patch, :put, :post, :delete].each do |m|
           define_method(m) do |url, &bl|
             url ||= ""
             url += (url =~ /\?/ ? "&" : "?")
-            url += URI.escape(@default_parameters.map{|k,v| "#{k}=#{v}"}.join('&')) if @default_parameters
+            url += hash2uri(global_parameters.merge(parameters))
             args = [url]
-            args << JSON.dump(@body) if @body
-            super(*args, &bl)
+            args << JSON.dump(json_body) if json_body
+            result = super(*args, &bl)
+            reset
+            result
           end
+        end
+
+      private
+
+        def hash2uri(h)
+          URI.escape(h.map{|k,v| "#{k}=#{v}"}.join('&'))
         end
 
       end # class Client

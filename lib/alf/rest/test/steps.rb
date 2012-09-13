@@ -70,6 +70,10 @@ Given /^the following (.*?) relation is mapped under (.*):$/ do |prototype, url,
   end
 end
 
+Given /^the "(.*?)" parameter is "(.*?)"$/ do |k,v|
+  client.parameter(k.to_sym,v)
+end
+
 Given /^the JSON body of the next request is the following tuple:$/ do |table|
   client.json_body = table.hashes.first
 end
