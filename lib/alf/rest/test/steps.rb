@@ -74,13 +74,6 @@ Given /^the JSON body of the next request is the following tuple:$/ do |table|
   client.json_body = table.hashes.first
 end
 
-Given /^the JSON body has the following (.*?) attribute (.*?):$/ do |attrname,prototype,table|
-  client.json_body ||= {}
-  client.with_relvar(prototype) do |rv|
-    client.json_body[attrname.to_sym] = rv.heading.coerce(table.hashes)
-  end
-end
-
 Given /^the JSON body of the next request is the following (.*?) tuple:$/ do |prototype,table|
   client.with_relvar(prototype) do |rv|
     client.json_body = rv.heading.coerce(table.hashes.first)
@@ -90,6 +83,27 @@ end
 Given /^the JSON body of the next request is the following (.*?) tuples:$/ do |prototype,table|
   client.with_relvar(prototype) do |rv|
     client.json_body = rv.heading.coerce(table.hashes)
+  end
+end
+
+Given /^the JSON body has the following (.*?) attribute (.*?):$/ do |attrname,prototype,table|
+  client.json_body ||= {}
+  client.with_relvar(prototype) do |rv|
+    client.json_body[attrname.to_sym] = rv.heading.coerce(table.hashes)
+  end
+end
+
+Given /^the JSON body has the following (.*?) rva (.*?):$/ do |attrname,prototype,table|
+  client.json_body ||= {}
+  client.with_relvar(prototype) do |rv|
+    client.json_body[attrname.to_sym] = rv.heading.coerce(table.hashes)
+  end
+end
+
+Given /^the JSON body has the following (.*?) tva (.*?):$/ do |attrname,prototype,table|
+  client.json_body ||= {}
+  client.with_relvar(prototype) do |rv|
+    client.json_body[attrname.to_sym] = Relation(rv.heading.coerce(table.hashes)).tuple_extract
   end
 end
 
@@ -158,6 +172,12 @@ end
 Then /^the size of a decoded relation should be (\d+)$/ do |size|
   @decoded = Relation(client.loaded_body)
   @decoded.size.should eq(Integer(size))
+end
+
+Then /^its (.*?) tva should equal:$/ do |tva,expected|
+  decoded  = Relation(@decoded.tuple_extract[tva.to_sym])
+  expected = Relation(decoded.heading.coerce(expected.hashes))
+  decoded.project(expected.attribute_list).tuple_extract.should eq(expected.tuple_extract)
 end
 
 Then /^its (.*?) rva should equal:$/ do |rva,expected|
