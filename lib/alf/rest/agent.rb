@@ -1,28 +1,22 @@
-require_relative 'agent/database_methods'
 require_relative 'agent/request_methods'
 require_relative 'agent/service_methods'
-
+require_relative 'agent/database_methods'
 module Alf
   module Rest
     class Agent
-      include DatabaseMethods
       include RequestMethods
       include ServiceMethods
+      include DatabaseMethods
 
-      # Sinatra application
-      attr_reader :app
-
-      # Creates an agent instance
-      def initialize(app)
+      def initialize(app, env = {})
         @app = app
+        @env = env
       end
+      attr_reader :app
+      attr_reader :env
 
       def settings
         app.settings
-      end
-
-      def request
-        app.request
       end
 
     end # class Agent

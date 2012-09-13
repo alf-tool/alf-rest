@@ -17,7 +17,3 @@ def app
     app
   end
 end
-
-def client
-  @client ||= Alf::Rest::Test::Client.new(app)
-end

@@ -3,18 +3,27 @@ module Alf
   module Rest
     class Base < Sinatra::Base
 
-      set :database, ::Alf::Schema.native
+      configure do
+        set :database, Alf::Schema.native
+        set :agent,    Alf::Rest::Agent
+      end
 
-      def db
-        @database ||= settings.database.connect(settings.adapter)
+      before do
+        env['alf-rest'] = settings.agent.new(self, env)
+      end
+
+      after do
+        env['alf-rest'].disconnect
       end
 
       def agent
-        @agent ||= Agent.new(self)
+        env['alf-rest']
       end
 
-      # Disconnect the database connection at end
-      after{ @database.disconnect if @database }
+      def database
+        agent.database
+      end
+      alias :db :database
 
       error Alf::NoSuchRelvarError,
             Alf::NoSuchTupleError,

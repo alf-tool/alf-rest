@@ -1,3 +1,15 @@
+def client
+  @client
+end
+
+Before do
+  @client = Alf::Rest::Test::Client.new(app)
+end
+
+After do
+  client.disconnect
+end
+
 Given /^the (.*?) relvar is empty$/ do |relvar|
   client.with_relvar(relvar) do |rv|
     rv.delete

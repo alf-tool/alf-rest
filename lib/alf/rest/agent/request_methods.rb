@@ -8,7 +8,7 @@ module Alf
 
         # The relation variable we are going to touch
         def relvar=(rv)
-          @relvar = rv.is_a?(Alf::Relvar) ? rv : db.relvar(rv)
+          @relvar = rv.is_a?(Alf::Relvar) ? rv : database.relvar(rv)
         end
         attr_reader :relvar
 

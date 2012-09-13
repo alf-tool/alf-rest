@@ -3,8 +3,24 @@ module Alf
     class Agent
       module DatabaseMethods
 
-        def db
-          app.db
+        def database
+          @database ||= begin
+            settings = app.settings
+            settings.database.connect(settings.adapter)
+          end
+        end
+
+        def database=(db)
+          disconnect
+          @database = db
+        end
+
+        def with_database
+          yield(database)
+        end
+
+        def disconnect
+          @database.disconnect if @database
         end
 
       end # module DatabaseMethods
