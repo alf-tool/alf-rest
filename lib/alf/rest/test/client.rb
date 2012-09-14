@@ -7,17 +7,20 @@ module Alf
 
         def initialize(app)
           @app = app
+          @global_headers = {}
           @global_parameters = {}
           reset
         end
         attr_reader :app
         attr_accessor :global_parameters
+        attr_accessor :global_headers
         attr_accessor :json_body
         attr_accessor :parameters
 
         def reset
           self.json_body  = nil
           self.parameters = {}
+          global_headers.each{|k,v| header(k,v)}
         end
 
         def with_relvar(*args, &bl)
@@ -28,6 +31,10 @@ module Alf
 
         def loaded_body
           JSON::load(last_response.body)
+        end
+
+        def global_header(k, v)
+          global_headers[k] = v
         end
 
         def parameter(k, v)

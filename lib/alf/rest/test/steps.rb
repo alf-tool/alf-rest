@@ -70,6 +70,10 @@ Given /^the following (.*?) relation is mapped under (.*):$/ do |prototype, url,
   end
 end
 
+Given /^the (.*?) header is "(.*?)"$/ do |k,v|
+  client.header(k,v)
+end
+
 Given /^the "(.*?)" parameter is "(.*?)"$/ do |k,v|
   client.parameter(k.to_sym,v)
 end
