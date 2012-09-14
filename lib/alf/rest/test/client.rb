@@ -20,7 +20,7 @@ module Alf
         def reset
           self.json_body  = nil
           self.parameters = {}
-          global_headers.each{|k,v| header(k,v)}
+          global_headers.each{|k,v| header(k,v) }
         end
 
         def with_relvar(*args, &bl)
