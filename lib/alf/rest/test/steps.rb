@@ -151,6 +151,12 @@ Then /^the body contains "(.*?)"$/ do |expected|
   client.last_response.body.should match(Regexp.compile(Regexp.escape(expected)))
 end
 
+Then /^a decoded tuple should equal:$/ do |expected|
+  expected = Tuple(expected.hashes.first)
+  @decoded = Tuple(client.loaded_body)
+  @decoded.project(expected.keys).should eq(expected)
+end
+
 Then /^a decoded (.*?) tuple should equal:$/ do |prototype,expected|
   client.with_relvar(prototype) do |rv|
     expected = Relation(rv.heading.coerce(expected.hashes.first))
