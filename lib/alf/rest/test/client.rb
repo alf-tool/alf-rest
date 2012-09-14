@@ -43,14 +43,17 @@ module Alf
 
         [:get, :patch, :put, :post, :delete].each do |m|
           define_method(m) do |url, &bl|
+            # build the url
             url ||= ""
             url += (url =~ /\?/ ? "&" : "?")
             url += hash2uri(global_parameters.merge(parameters))
             args = [url]
+
+            # encode and set the body
             args << JSON.dump(json_body) if json_body
-            result = super(*args, &bl)
-            reset
-            result
+
+            # make the call
+            super(*args, &bl).tap{ reset }
           end
         end
 
