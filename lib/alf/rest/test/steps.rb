@@ -51,21 +51,21 @@ Given /^the following (.*?) relation is mapped under (.*):$/ do |prototype, url,
   app.post(url) do
     agent.relvar = prototype
     agent.mode   = :relation
-    agent.body   = JSON.parse(request.body.read) rescue halt(400)
+    agent.body   = payload rescue halt(400)
     agent.post
   end
   app.patch("#{url}/:id") do
     agent.relvar = prototype
     agent.mode   = :tuple
     agent.primary_key_equal(params[:id])
-    agent.body   = JSON.parse(request.body.read) rescue halt(400)
+    agent.body   = payload rescue halt(400)
     agent.patch
   end
   app.put("#{url}/:id") do
     agent.relvar = prototype
     agent.mode   = :tuple
     agent.primary_key_equal(params[:id])
-    agent.body   = JSON.parse(request.body.read) rescue halt(400)
+    agent.body   = payload rescue halt(400)
     agent.patch
   end
 end
@@ -136,15 +136,15 @@ Given /^I follow the specified Location$/ do
 end
 
 Then /^the body should be a JSON array$/ do
-  client.loaded_body.should be_a(Array)
+  client.payload.should be_a(Array)
 end
 
 Then /^the body should be an empty JSON array$/ do
-  client.loaded_body.should eq([])
+  client.payload.should eq([])
 end
 
 Then /^the body should be a JSON object$/ do
-  client.loaded_body.should be_a(Hash)
+  client.payload.should be_a(Hash)
 end
 
 Then /^the body contains "(.*?)"$/ do |expected|
@@ -153,14 +153,14 @@ end
 
 Then /^a decoded tuple should equal:$/ do |expected|
   expected = Tuple(expected.hashes.first)
-  @decoded = Tuple(client.loaded_body)
+  @decoded = Tuple(client.payload)
   @decoded.project(expected.keys).should eq(expected)
 end
 
 Then /^a decoded (.*?) tuple should equal:$/ do |prototype,expected|
   client.with_relvar(prototype) do |rv|
     expected = Relation(rv.heading.coerce(expected.hashes.first))
-    @decoded = Relation(rv.heading.coerce(client.loaded_body))
+    @decoded = Relation(rv.heading.coerce(client.payload))
     @decoded.project(expected.attribute_list).should eq(expected)
   end
 end
@@ -168,27 +168,27 @@ end
 Then /^a decoded (.*?) relation should equal:$/ do |prototype,expected|
   client.with_relvar(prototype) do |rv|
     expected = Relation(rv.heading.coerce(expected.hashes))
-    @decoded = Relation(rv.heading.coerce(client.loaded_body))
+    @decoded = Relation(rv.heading.coerce(client.payload))
     @decoded.project(expected.attribute_list).should eq(expected)
   end
 end
 
 Then /^a decoded relation should be (.*?)$/ do |expected|
   client.with_relvar(expected) do |rv|
-    @decoded = Relation(rv.heading.coerce(client.loaded_body))
+    @decoded = Relation(rv.heading.coerce(client.payload))
     @decoded.should eq(rv.value)
   end  
 end
 
 Then /^a decoded (.*?) relation should be empty$/ do |prototype|
   client.with_relvar(prototype) do |rv|
-    @decoded = Relation(rv.heading.coerce(client.loaded_body))
+    @decoded = Relation(rv.heading.coerce(client.payload))
     @decoded.should be_empty
   end
 end
 
 Then /^the size of a decoded relation should be (\d+)$/ do |size|
-  @decoded = Relation(client.loaded_body)
+  @decoded = Relation(client.payload)
   @decoded.size.should eq(Integer(size))
 end
 

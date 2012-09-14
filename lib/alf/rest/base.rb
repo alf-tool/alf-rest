@@ -2,6 +2,7 @@ require 'sinatra/base'
 module Alf
   module Rest
     class Base < Sinatra::Base
+      include Payload::Server
 
       configure do
         set :database, Alf::Schema.native

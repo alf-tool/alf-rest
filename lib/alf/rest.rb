@@ -1,3 +1,4 @@
+require 'json'
 require_relative 'rest/version'
 require_relative 'rest/loader'
 module Alf
@@ -8,5 +9,6 @@ module Alf
 
   end
 end
+require_relative 'rest/payload'
 require_relative 'rest/agent'
 require_relative 'rest/base'

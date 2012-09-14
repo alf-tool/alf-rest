@@ -12,6 +12,7 @@ module Alf
       class Client
         include ::Rack::Test::Methods
         include Agent::DatabaseMethods
+        include Payload::Client
 
         def initialize(app)
           @app = app
@@ -37,10 +38,6 @@ module Alf
           end
         end
 
-        def loaded_body
-          JSON::load(last_response.body)
-        end
-
         def headers
           current_session.headers
         end
@@ -62,7 +59,7 @@ module Alf
             args = [url]
 
             # encode and set the body
-            args << encode_body
+            args << to_payload(body)
 
             # make the call
             super(*args, &bl).tap{ reset }
@@ -70,18 +67,6 @@ module Alf
         end
 
       private
-
-        def encode_body
-          case headers["Content-Type"]
-          when /form-urlencoded/
-            hash2uri(body)
-          when /json/
-            require 'json'
-            ::JSON.dump(body)
-          else
-            raise "Unknown params format: #{headers.inspect}"
-          end
-        end
 
         def hash2uri(h)
           URI.escape(h.map{|k,v| "#{k}=#{v}"}.join('&'))

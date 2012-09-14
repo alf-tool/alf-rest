@@ -15,7 +15,7 @@ module Alf
 
         def get
           with_restricted_relvar do |rv|
-            serve(mode==:tuple ? rv.tuple_extract : rv)
+            app.send_payload(mode==:tuple ? rv.tuple_extract : rv)
           end
         end
 
@@ -43,16 +43,16 @@ module Alf
             # yield if requested
             yield(created) if block_given?
 
-            # serve now
+            # app.send_payload now
             app.status 201
-            serve created
+            app.send_payload created
           end
         end
 
         def no_post(tuple)
           app.status 303
           set_location(tuple)
-          serve tuple
+          app.send_payload tuple
         end
 
         def delete
@@ -87,9 +87,9 @@ module Alf
             # sets the location
             set_location(updated)
 
-            # serve now
+            # app.send_payload now
             app.status 200
-            serve updated
+            app.send_payload updated
           end
         end
         alias :put :patch
@@ -101,11 +101,6 @@ module Alf
           if location = l.call(tuple)
             app.headers("Location" => location)
           end
-        end
-
-        def serve(data)
-          app.content_type :json
-          data.to_json
         end
 
       end # module ServiceMethods
