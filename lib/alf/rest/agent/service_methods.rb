@@ -3,9 +3,13 @@ module Alf
     class Agent
       module ServiceMethods
 
-        def assert!
-          with_restricted_relvar do |rv|
-            rv.not_empty!
+        def assert!(&bl)
+          if bl
+            database.assert!(&bl)
+          else
+            with_restricted_relvar do |rv|
+              rv.not_empty!
+            end
           end
         end
 
