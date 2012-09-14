@@ -11,7 +11,7 @@ Feature: POST that violates a key constraint
 
   Scenario: POST with a tuple that violates the primary key
 
-    Given the JSON body of the next request is the following suppliers tuple:
+    Given the body of the next request is the following suppliers tuple:
       | sid |  name |  status |   city |
       |   1 | Smith |      20 | London |
     And I make a POST to /suppliers

@@ -11,7 +11,7 @@ Feature: PATCH of a specific tuple
 
   Scenario: PATCH on /suppliers/1
 
-    Given the JSON body of the next request is the following suppliers tuple:
+    Given the body of the next request is the following suppliers tuple:
       | status |   city |
       |     30 |  Paris |
     And I make a PATCH on /suppliers/1

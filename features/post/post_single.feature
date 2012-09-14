@@ -11,7 +11,7 @@ Feature: POST on a collection url, with a single tuple
 
   Scenario: POST to /suppliers with a tuple
 
-    Given the JSON body of the next request is the following suppliers tuple:
+    Given the body of the next request is the following suppliers tuple:
       | sid |  name |  status |   city |
       |   3 | Blake |      30 |  Paris |
     And I make a POST to /suppliers

@@ -78,40 +78,40 @@ Given /^the "(.*?)" parameter is "(.*?)"$/ do |k,v|
   client.parameter(k.to_sym,v)
 end
 
-Given /^the JSON body of the next request is the following tuple:$/ do |table|
-  client.json_body = table.hashes.first
+Given /^the body of the next request is the following tuple:$/ do |table|
+  client.body = table.hashes.first
 end
 
-Given /^the JSON body of the next request is the following (.*?) tuple:$/ do |prototype,table|
+Given /^the body of the next request is the following (.*?) tuple:$/ do |prototype,table|
   client.with_relvar(prototype) do |rv|
-    client.json_body = rv.heading.coerce(table.hashes.first)
+    client.body = rv.heading.coerce(table.hashes.first)
   end
 end
 
-Given /^the JSON body of the next request is the following (.*?) tuples:$/ do |prototype,table|
+Given /^the body of the next request is the following (.*?) tuples:$/ do |prototype,table|
   client.with_relvar(prototype) do |rv|
-    client.json_body = rv.heading.coerce(table.hashes)
+    client.body = rv.heading.coerce(table.hashes)
   end
 end
 
-Given /^the JSON body has the following (.*?) attribute (.*?):$/ do |attrname,prototype,table|
-  client.json_body ||= {}
+Given /^the body has the following (.*?) attribute (.*?):$/ do |attrname,prototype,table|
+  client.body ||= {}
   client.with_relvar(prototype) do |rv|
-    client.json_body[attrname.to_sym] = rv.heading.coerce(table.hashes)
+    client.body[attrname.to_sym] = rv.heading.coerce(table.hashes)
   end
 end
 
-Given /^the JSON body has the following (.*?) rva (.*?):$/ do |attrname,prototype,table|
-  client.json_body ||= {}
+Given /^the body has the following (.*?) rva (.*?):$/ do |attrname,prototype,table|
+  client.body ||= {}
   client.with_relvar(prototype) do |rv|
-    client.json_body[attrname.to_sym] = rv.heading.coerce(table.hashes)
+    client.body[attrname.to_sym] = rv.heading.coerce(table.hashes)
   end
 end
 
-Given /^the JSON body has the following (.*?) tva (.*?):$/ do |attrname,prototype,table|
-  client.json_body ||= {}
+Given /^the body has the following (.*?) tva (.*?):$/ do |attrname,prototype,table|
+  client.body ||= {}
   client.with_relvar(prototype) do |rv|
-    client.json_body[attrname.to_sym] = Relation(rv.heading.coerce(table.hashes)).tuple_extract
+    client.body[attrname.to_sym] = Relation(rv.heading.coerce(table.hashes)).tuple_extract
   end
 end
 

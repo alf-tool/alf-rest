@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/alf-tool/alf
-  revision: 7df754de7d2a1f423b501c6cac8a256ea484f581
+  revision: b8f531e8aa004587162a96448fff7f402df3e344
   specs:
     alf (0.13.0)
       backports (~> 2.6)
@@ -27,7 +27,7 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
-    backports (2.6.3)
+    backports (2.6.4)
     builder (3.0.0)
     cucumber (1.2.1)
       builder (>= 2.1.2)

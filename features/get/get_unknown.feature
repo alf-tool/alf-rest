@@ -18,4 +18,3 @@ Feature: GET on a unknown tuple
 
     Given I make a GET on /suppliers/test
     Then the status should be 400
-    And the body contains "invalid value for Integer"

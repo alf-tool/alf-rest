@@ -10,7 +10,7 @@ Feature: POST on a collection url, with many tuples
 
   Scenario: POST to /suppliers with a tuple
 
-    Given the JSON body of the next request is the following suppliers tuples:
+    Given the body of the next request is the following suppliers tuples:
       | sid |  name |  status |   city |
       |   2 | Jones |      10 |  Paris |
       |   3 | Blake |      30 |  Paris |

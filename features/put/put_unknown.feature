@@ -11,7 +11,7 @@ Feature: PUT of a unknown tuple
 
   Scenario: PUT on an unexisting supplier
 
-    Given the JSON body of the next request is the following suppliers tuple:
+    Given the body of the next request is the following suppliers tuple:
       | status |   city |
       |     30 |  Paris |
     And I make a PUT on /suppliers/3

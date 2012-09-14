@@ -1,3 +1,11 @@
+module Rack
+  module Test
+    class Session
+      attr_reader :headers
+    end
+  end
+end
+
 module Alf
   module Rest
     module Test
@@ -7,18 +15,18 @@ module Alf
 
         def initialize(app)
           @app = app
-          @global_headers = {}
-          @global_parameters = {}
+          @global_headers = { "Content-Type" => "application/json" }
+          @global_parameters = { }
           reset
         end
         attr_reader :app
         attr_accessor :global_parameters
         attr_accessor :global_headers
-        attr_accessor :json_body
+        attr_accessor :body
         attr_accessor :parameters
 
         def reset
-          self.json_body  = nil
+          self.body       = nil
           self.parameters = {}
           global_headers.each{|k,v| header(k,v) }
         end
@@ -31,6 +39,10 @@ module Alf
 
         def loaded_body
           JSON::load(last_response.body)
+        end
+
+        def headers
+          current_session.headers
         end
 
         def global_header(k, v)
@@ -50,7 +62,7 @@ module Alf
             args = [url]
 
             # encode and set the body
-            args << JSON.dump(json_body) if json_body
+            args << encode_body
 
             # make the call
             super(*args, &bl).tap{ reset }
@@ -58,6 +70,18 @@ module Alf
         end
 
       private
+
+        def encode_body
+          case headers["Content-Type"]
+          when /form-urlencoded/
+            hash2uri(body)
+          when /json/
+            require 'json'
+            ::JSON.dump(body)
+          else
+            raise "Unknown params format: #{headers.inspect}"
+          end
+        end
 
         def hash2uri(h)
           URI.escape(h.map{|k,v| "#{k}=#{v}"}.join('&'))

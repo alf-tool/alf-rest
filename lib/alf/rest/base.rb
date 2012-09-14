@@ -35,8 +35,7 @@ module Alf
         halt 403
       end
 
-      error JSON::ParserError,
-            Alf::CoercionError do
+      error Alf::CoercionError do
         status 400
       end
 
