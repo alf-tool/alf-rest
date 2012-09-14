@@ -35,10 +35,9 @@ module Alf
         halt 403
       end
 
-      error Alf::CoercionError do |ex|
+      error JSON::ParserError,
+            Alf::CoercionError do
         status 400
-        content_type "text/plain"
-        body ex.message[/\((.*)\)$/, 1]
       end
 
       error StandardError do |ex|
