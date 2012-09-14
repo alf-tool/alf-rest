@@ -41,7 +41,7 @@ module Alf
       end
 
       error StandardError do |ex|
-        if settings.environment == :development
+        if settings.environment.to_s =~ /^devel/
           puts ex.class
           puts ex.message
           puts ex.backtrace.join("\n")
