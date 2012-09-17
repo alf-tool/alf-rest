@@ -26,6 +26,11 @@ module Alf
       end
       alias :db :database
 
+      not_found do
+        status 404
+        send_payload(:error => "not found")
+      end
+
       error Alf::NoSuchRelvarError,
             Alf::NoSuchTupleError,
             Sinatra::NotFound do
@@ -34,10 +39,12 @@ module Alf
 
       error Alf::FactAssertionError do
         halt 403
+        send_payload(:error => "forbidden")
       end
 
       error Alf::CoercionError do
         status 400
+        send_payload(:error => "coercion error")
       end
 
       error StandardError do |ex|
@@ -51,8 +58,7 @@ module Alf
         else
           status 500
         end
-        content_type "text/plain"
-        body ex.message
+        send_payload(:error => "an error occured")
       end
 
     end # class Base
