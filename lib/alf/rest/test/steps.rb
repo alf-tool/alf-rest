@@ -115,6 +115,11 @@ Given /^the body has the following (.*?) tva (.*?):$/ do |attrname,prototype,tab
   end
 end
 
+Given /^the body has a nil for (.*?)$/ do |attrname|
+  client.body ||= {}
+  client.body[attrname.to_sym] = nil
+end
+
 Given /^I make a (.*?) (on|to) (.*)$/ do |verb, _, url|
   client.send(verb.downcase.to_sym, url)
 end
@@ -190,6 +195,10 @@ end
 Then /^the size of a decoded relation should be (\d+)$/ do |size|
   @decoded = Relation(client.payload)
   @decoded.size.should eq(Integer(size))
+end
+
+Then /its (.*?) attribute should be nil/ do |attrname|
+  @decoded.tuple_extract[attrname.to_sym].should be_nil
 end
 
 Then /^its (.*?) tva should equal:$/ do |tva,expected|
