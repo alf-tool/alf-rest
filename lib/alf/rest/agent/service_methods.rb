@@ -45,7 +45,7 @@ module Alf
 
             # app.send_payload now
             app.status 201
-            app.send_payload created
+            app.send_payload(created) if locator
           end
         end
 
@@ -89,7 +89,7 @@ module Alf
 
             # app.send_payload now
             app.status 200
-            app.send_payload updated
+            app.send_payload(updated) if locator
           end
         end
         alias :put :patch
