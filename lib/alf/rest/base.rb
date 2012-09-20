@@ -43,10 +43,14 @@ module Alf
         send_payload(:error => "not found")
       end
 
-      error Alf::NoSuchRelvarError,
-            Alf::NoSuchTupleError,
-            Sinatra::NotFound do |ex|
+      error Sinatra::NotFound do |ex|
         not_found
+      end
+
+      error Alf::NoSuchRelvarError,
+            Alf::NoSuchTupleError do |ex|
+        status 404
+        send_payload(:error => error_occured(ex) || "not found")
       end
 
       error Alf::FactAssertionError do |ex|
