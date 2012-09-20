@@ -26,6 +26,18 @@ module Alf
       end
       alias :db :database
 
+      def error_occured(ex)
+        if settings.environment.to_s =~ /^devel|test/
+          msg    = "#{ex.message} (#{ex.class})"
+          to_log = %Q{#{msg}\n#{ex.backtrace.join("\n")}}
+        else
+          msg    = nil
+          to_log = "#{ex.message} (#{ex.class})"
+        end
+        settings.logger.info("catched error: #{to_log}") if settings.logger
+        msg
+      end
+
       not_found do
         status 404
         send_payload(:error => "not found")
@@ -33,32 +45,27 @@ module Alf
 
       error Alf::NoSuchRelvarError,
             Alf::NoSuchTupleError,
-            Sinatra::NotFound do
+            Sinatra::NotFound do |ex|
         not_found
       end
 
-      error Alf::FactAssertionError do
+      error Alf::FactAssertionError do |ex|
         halt 403
-        send_payload(:error => "forbidden")
+        send_payload(:error => error_occured(ex) || "forbidden")
       end
 
-      error Alf::CoercionError do
+      error Alf::CoercionError do |ex|
         status 400
-        send_payload(:error => "coercion error")
+        send_payload(:error => error_occured(ex) || "coercion error")
       end
 
       error StandardError do |ex|
-        if settings.environment.to_s =~ /^devel/
-          puts ex.class
-          puts ex.message
-          puts ex.backtrace.join("\n")
-        end
         if defined?(::Sequel) && ex.is_a?(::Sequel::DatabaseError)
           status 400
         else
           status 500
         end
-        send_payload(:error => "an error occured")
+        send_payload(:error => error_occured(ex) || "an error occured")
       end
 
     end # class Base
