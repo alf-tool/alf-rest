@@ -136,6 +136,10 @@ Then /^the content type should be (.*)$/ do |ct|
   client.last_response.content_type.should =~ Regexp.new(Regexp.escape(ct))
 end
 
+Then /^the Location header should not be set$/ do
+  client.last_response.location.should be_nil
+end
+
 Given /^I follow the specified Location$/ do
   client.get(client.last_response.location)
 end
