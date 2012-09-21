@@ -221,3 +221,8 @@ Then /^its (.*?) rva should be empty$/ do |rva|
   tuple = @decoded.tuple_extract
   tuple[rva.to_sym].should be_empty
 end
+
+Then /^its (.*?) rva should have size (\d+)$/ do |rva,size|
+  tuple = @decoded.tuple_extract
+  tuple[rva.to_sym].size.should eq(Integer(size))
+end
