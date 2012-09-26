@@ -14,6 +14,7 @@ def app
     app = Class.new(Alf::Rest::Base)
     app.set :environment, :test
     app.set :adapter, Path.relative("sap.db")
+    #app.set :logger, Logger.new(STDOUT)
     app
   end
 end

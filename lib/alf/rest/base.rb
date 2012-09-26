@@ -7,6 +7,7 @@ module Alf
       configure do
         set :database, Alf::Schema.native
         set :agent,    Alf::Rest::Agent
+        set :logger,   nil
       end
 
       before do
