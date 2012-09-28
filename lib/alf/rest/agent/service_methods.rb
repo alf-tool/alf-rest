@@ -22,7 +22,7 @@ module Alf
         def post
           raise NotSupportedError unless mode==:relation
           with_restricted_relvar do |rv|
-            single  = self.body.is_a?(Hash)
+            single  = Hash===self.body || Tuple===self.body
 
             # project tuples and coerce them
             tuples  = Relation(self.body)
