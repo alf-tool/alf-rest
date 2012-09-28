@@ -60,9 +60,9 @@ module Alf
             @locator = locator
           when String
             @locator = lambda{|tuple|
-              if tuple.is_a?(Hash)
+              if tuple.respond_to?(:to_hash)
                 key = with_relvar{|rv| first_key!(rv)}.to_a
-                val = key.map{|attr| tuple[attr]}.join(",")
+                val = key.map{|attr| tuple.to_hash[attr]}.join(",")
                 "#{locator}/#{val}"
               end
             }
