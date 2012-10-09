@@ -20,7 +20,7 @@ module Alf
         end
 
         def disconnect
-          @database.disconnect if @database
+          @database.close if @database
         end
 
       end # module DatabaseMethods

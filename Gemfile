@@ -9,6 +9,7 @@ end
 group :development do
   gem "rake", "~> 0.9.2"
   gem "rspec", "~> 2.10"
+  gem "letters"
 end
 
 group :test do

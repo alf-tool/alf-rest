@@ -5,7 +5,7 @@ module Alf
       include Payload::Server
 
       configure do
-        set :database, Alf::Schema.native
+        set :database, Alf::Database
         set :agent,    Alf::Rest::Agent
         set :logger,   nil
       end
