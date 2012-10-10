@@ -10,11 +10,15 @@ require 'alf/rest/test'
 require 'alf-sequel'
 
 def app
-  @app ||= begin
-    app = Class.new(Alf::Rest::Base)
-    app.set :environment, :test
-    app.set :adapter, Path.relative("sap.db")
-    #app.set :logger, Logger.new(STDOUT)
-    app
+  $app ||= begin
+    Class.new(Sinatra::Base){
+      set :environment, :test
+      set :database, Alf.database(Path.relative("sap.db"))
+      use Alf::Rest do |cfg|
+        cfg.database = settings.database
+        cfg.logger   = nil
+      end
+      helpers Alf::Rest::Helpers
+    }
   end
 end

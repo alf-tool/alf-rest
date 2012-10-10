@@ -1,22 +1,19 @@
 require_relative 'agent/request_methods'
 require_relative 'agent/service_methods'
-require_relative 'agent/database_methods'
 module Alf
   module Rest
     class Agent
       include RequestMethods
       include ServiceMethods
-      include DatabaseMethods
 
-      def initialize(app, env = {})
+      def initialize(app, config)
         @app = app
-        @env = env
+        @config = config
       end
-      attr_reader :app
-      attr_reader :env
+      attr_reader :app, :config
 
-      def settings
-        app.settings
+      def db_conn
+        config.connection
       end
 
     end # class Agent

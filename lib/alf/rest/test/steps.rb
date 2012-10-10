@@ -3,7 +3,7 @@ def client
 end
 
 Before do
-  @client = Alf::Rest::Test::Client.new(app)
+  @client = Alf::Rest::Test::Client.new(app.database)
 end
 
 After do

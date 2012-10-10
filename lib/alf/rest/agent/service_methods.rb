@@ -5,7 +5,7 @@ module Alf
 
         def assert!(&bl)
           if bl
-            database.assert!(&bl)
+            db_conn.assert!(&bl)
           else
             with_restricted_relvar do |rv|
               rv.not_empty!
@@ -45,14 +45,12 @@ module Alf
 
             # app.send_payload now
             app.status 201
-            app.send_payload(created) if locator
           end
         end
 
         def no_post(tuple)
           app.status 303
           set_location(tuple)
-          app.send_payload tuple
         end
 
         def delete
@@ -89,7 +87,6 @@ module Alf
 
             # app.send_payload now
             app.status 200
-            app.send_payload(updated) if locator
           end
         end
         alias :put :patch

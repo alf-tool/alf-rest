@@ -19,7 +19,11 @@ module Alf
             JSON.dump(h)
           when /text\/plain/
             content_type "text/plain"
-            h.respond_to?(:to_text) ? h.to_text : h.to_s
+            case h
+            when ->(x){ x.respond_to?(:to_text) } then h.to_text
+            when Hash, Tuple                      then Relation.coerce(h).to_text
+            else                                  h.to_s
+            end
           else
             content_type :json
             JSON.dump(h)

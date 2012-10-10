@@ -17,7 +17,9 @@ Feature: PUT of a specific tuple
     And I make a PUT on /suppliers/1
 
     Then the status should be 200
-    And the body should be a JSON object
+
+    Given I follow the specified Location
+    Then the body should be a JSON object
     And a decoded suppliers tuple should equal:
       | sid |  name |  status |   city |
       |   1 | Smith |      30 |  Paris |

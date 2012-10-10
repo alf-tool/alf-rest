@@ -11,16 +11,16 @@ module Alf
     module Test
       class Client
         include ::Rack::Test::Methods
-        include Agent::DatabaseMethods
         include Payload::Client
 
-        def initialize(app)
-          @app = app
+        def initialize(database)
+          @database = database
+          @db_conn  = database.connection
           @global_headers = { "Content-Type" => "application/json" }
           @global_parameters = { }
           reset
         end
-        attr_reader :app
+        attr_reader :database, :db_conn
         attr_accessor :global_parameters
         attr_accessor :global_headers
         attr_accessor :body
@@ -32,9 +32,21 @@ module Alf
           global_headers.each{|k,v| header(k,v) }
         end
 
+        def disconnect
+          db_conn.close if db_conn
+        end
+
+        def with_database
+          yield(database)
+        end
+
+        def with_db_conn(&bl)
+          yield(db_conn)
+        end
+
         def with_relvar(*args, &bl)
-          with_database do |db|
-            yield(db.relvar(*args))
+          with_db_conn do |db_conn|
+            yield(db_conn.relvar(*args))
           end
         end
 

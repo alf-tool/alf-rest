@@ -17,12 +17,6 @@ Feature: POST on a collection url, with many tuples
     And I make a POST to /suppliers
 
     Then the status should be 201
-    And the content type should be application/json
-    And the body should be a JSON array
-    And a decoded suppliers relation should equal:
-      | sid |  name |  status |   city |
-      |   2 | Jones |      10 |  Paris |
-      |   3 | Blake |      30 |  Paris |
 
     Given I make a GET on /suppliers
     Then a decoded suppliers relation should equal:

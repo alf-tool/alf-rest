@@ -17,6 +17,8 @@ Feature: POST on a collection url, with a single tuple
     And I make a POST to /suppliers
 
     Then the status should be 201
+
+    Given I follow the specified Location
     And the content type should be application/json
     And the body should be a JSON object
     And a decoded suppliers tuple should equal:
