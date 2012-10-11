@@ -13,9 +13,10 @@ module Alf
         include ::Rack::Test::Methods
         include Payload::Client
 
-        def initialize(database)
-          @database = database
-          @db_conn  = database.connection
+        def initialize(config)
+          @config   = config
+          @database = config.database
+          @db_conn  = config.database.connection
           @global_headers = { "Content-Type" => "application/json" }
           @global_parameters = { }
           reset

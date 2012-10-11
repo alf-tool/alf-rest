@@ -3,7 +3,7 @@ def client
 end
 
 Before do
-  @client = Alf::Rest::Test::Client.new(app.database)
+  @client ||= Alf::Rest::Test::Client.new(Alf::Rest::Test.config)
 end
 
 After do

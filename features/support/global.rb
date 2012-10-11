@@ -9,15 +9,16 @@ require 'alf-rest'
 require 'alf/rest/test'
 require 'alf-sequel'
 
+Alf::Rest::Test.config do |cfg|
+  cfg.database = Alf.database(Path.relative("sap.db"))
+  cfg.logger   = nil
+end
+
 def app
   $app ||= begin
     Class.new(Sinatra::Base){
       set :environment, :test
-      set :database, Alf.database(Path.relative("sap.db"))
-      use Alf::Rest do |cfg|
-        cfg.database = settings.database
-        cfg.logger   = nil
-      end
+      use Alf::Rest, Alf::Rest::Test.config
       helpers Alf::Rest::Helpers
     }
   end

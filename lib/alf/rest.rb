@@ -14,8 +14,7 @@ module Alf
 
     RACK_ERROR_KEY = 'alf-rest-error'
 
-    def self.new(app)
-      config = Config.new
+    def self.new(app, config = Config.new)
       yield(config) if block_given?
       Middleware.new(app, config)
     end
