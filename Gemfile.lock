@@ -1,12 +1,6 @@
 GIT
-  remote: git://github.com/brynary/rack-test.git
-  revision: 5080d1e99de825bdd3b2b7bba34e5ac61cedd876
-  specs:
-    rack-test (0.6.2)
-      rack (>= 1.0)
-
-PATH
-  remote: ../alf
+  remote: git://github.com/alf-tool/alf
+  revision: 64d759e0e84689f6f3835f6ded1e261d3fec6781
   specs:
     alf (0.13.0)
       backports (~> 2.6)
@@ -16,12 +10,20 @@ PATH
       quickl (~> 0.4.3)
       sexpr (~> 0.5.1)
 
-PATH
-  remote: ../alf-sequel
+GIT
+  remote: git://github.com/alf-tool/alf-sequel
+  revision: 3d94172c40d3bdf08264b68be37e3b3a04144110
   specs:
     alf-sequel (0.13.0)
       alf (~> 0.13.0)
       sequel (~> 3.36)
+
+GIT
+  remote: git://github.com/brynary/rack-test.git
+  revision: 5080d1e99de825bdd3b2b7bba34e5ac61cedd876
+  specs:
+    rack-test (0.6.2)
+      rack (>= 1.0)
 
 GEM
   remote: http://rubygems.org/

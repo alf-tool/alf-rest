@@ -66,6 +66,28 @@ module Alf
         end
       end
 
+      context 'when JSON is unable to parse' do
+        let(:error){ begin JSON.parse("{:"); rescue => ex; ex; end }
+
+        before do
+          last_response.status.should eq(400)
+        end
+
+        context 'in production' do
+          let(:the_env){ :production }
+          it 'sets a single message' do
+            last_response.body.should =~ /invalid json body/
+          end
+        end
+
+        context 'in staging' do
+          let(:the_env){ :staging }
+          it 'sets the real message' do
+            last_response.body.should =~ /unexpected token at/
+          end
+        end
+      end
+
     end
   end
 end
