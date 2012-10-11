@@ -36,6 +36,11 @@ module Alf
         end
       end
 
+      # Reconnect
+      def reconnect(opts)
+        connection.reconnect(opts)
+      end
+
     end # class Config
   end # module Rest
 end # module Alf

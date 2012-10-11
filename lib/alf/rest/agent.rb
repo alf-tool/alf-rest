@@ -16,6 +16,10 @@ module Alf
         config.connection
       end
 
+      def reconnect(opts)
+        config.reconnect(opts)
+      end
+
     end # class Agent
   end # module Rest
 end # module Alf
