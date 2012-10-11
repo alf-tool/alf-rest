@@ -8,7 +8,10 @@ module Alf
 
         # The relation variable we are going to touch
         def relvar=(rv)
-          @relvar = rv.is_a?(Alf::Relvar) ? rv : db_conn.relvar(rv)
+          @relvar = case rv
+                    when Alf::Relation, Alf::Relvar then rv
+                    else db_conn.relvar(rv)
+                    end
         end
         attr_reader :relvar
 
