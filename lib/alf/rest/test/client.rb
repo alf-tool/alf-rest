@@ -1,11 +1,3 @@
-module Rack
-  module Test
-    class Session
-      attr_reader :headers
-    end
-  end
-end
-
 module Alf
   module Rest
     module Test
