@@ -21,7 +21,8 @@ module Alf
 
         def with_restricted_relvar
           with_relvar do |rv|
-            yield rv.restrict(restriction)
+            rv = rv.restrict(restriction) unless restriction.tautology?
+            yield(rv)
           end
         end
 
