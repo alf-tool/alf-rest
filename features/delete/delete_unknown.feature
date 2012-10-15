@@ -13,3 +13,4 @@ Feature: DELETE of a unknown tuple
 
     Given I make a DELETE on /suppliers/3
     Then the status should be 404
+    And the body should be empty

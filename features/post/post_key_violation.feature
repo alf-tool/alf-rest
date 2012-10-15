@@ -17,3 +17,4 @@ Feature: POST that violates a key constraint
     And I make a POST to /suppliers
 
     Then the status should be 400
+    And the body should be empty

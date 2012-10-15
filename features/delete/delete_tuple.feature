@@ -13,6 +13,7 @@ Feature: DELETE of a specific tuple
 
     Given I make a DELETE on /suppliers/1
     Then the status should be 204
+    And the body should be empty
 
     Given I make a GET on /suppliers
     Then a decoded suppliers relation should equal:

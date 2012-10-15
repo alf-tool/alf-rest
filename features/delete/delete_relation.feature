@@ -13,6 +13,7 @@ Feature: DELETE of a full relation
 
     Given I make a DELETE on /suppliers
     Then the status should be 204
+    And the body should be empty
 
     Given I make a GET on /suppliers
     Then a decoded suppliers relation should be empty

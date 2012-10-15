@@ -147,6 +147,10 @@ Given /^I follow the specified Location$/ do
   client.get(client.last_response.location)
 end
 
+Then /^the body should be empty$/ do
+  client.body.should be_nil
+end
+
 Then /^the body should be a JSON array$/ do
   client.payload.should be_a(Array)
 end

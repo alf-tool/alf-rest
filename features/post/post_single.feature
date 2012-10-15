@@ -17,6 +17,7 @@ Feature: POST on a collection url, with a single tuple
     And I make a POST to /suppliers
 
     Then the status should be 201
+    And the body should be empty
 
     Given I follow the specified Location
     And the content type should be application/json

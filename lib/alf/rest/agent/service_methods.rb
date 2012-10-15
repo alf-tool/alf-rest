@@ -45,12 +45,14 @@ module Alf
 
             # app.send_payload now
             app.status 201
+            201
           end
         end
 
         def no_post(tuple)
-          app.status 303
           set_location(tuple)
+          app.status 303
+          303
         end
 
         def delete
@@ -87,6 +89,7 @@ module Alf
 
             # app.send_payload now
             app.status 200
+            200
           end
         end
         alias :put :patch

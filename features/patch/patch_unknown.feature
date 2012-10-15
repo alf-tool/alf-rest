@@ -17,3 +17,4 @@ Feature: PATCH of a unknown tuple
     And I make a PATCH on /suppliers/3
 
     Then the status should be 404
+    And the body should be empty

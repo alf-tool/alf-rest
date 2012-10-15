@@ -17,6 +17,7 @@ Feature: POST on a collection url, with many tuples
     And I make a POST to /suppliers
 
     Then the status should be 201
+    And the body should be empty
 
     Given I make a GET on /suppliers
     Then a decoded suppliers relation should equal:

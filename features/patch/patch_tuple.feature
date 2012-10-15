@@ -17,6 +17,7 @@ Feature: PATCH of a specific tuple
     And I make a PATCH on /suppliers/1
 
     Then the status should be 200
+    And the body should be empty
 
     Given I follow the specified Location
     Then the body should be a JSON object
