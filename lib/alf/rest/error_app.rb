@@ -14,13 +14,13 @@ module Alf
         when Sinatra::NotFound
           handle_error(404, "not found")
         when Alf::NoSuchRelvarError
-          handle_error(404, "relvar not found")
+          handle_error(ex.http_status || 404, "relvar not found")
         when Alf::NoSuchTupleError
-          handle_error(404, "tuple not found")
+          handle_error(ex.http_status || 404, "tuple not found")
         when Alf::FactAssertionError
-          handle_error(403, "forbidden")
+          handle_error(ex.http_status || 403, "forbidden")
         when Alf::CoercionError
-          handle_error(400, "coercion error")
+          handle_error(ex.http_status || 400, "coercion error")
         when JSON::ParserError
           handle_error(400, "invalid json body")
         when ->(ex){ defined?(::Sequel) && ex.is_a?(::Sequel::DatabaseError) }

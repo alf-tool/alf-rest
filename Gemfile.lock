@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/alf-tool/alf
-  revision: 64d759e0e84689f6f3835f6ded1e261d3fec6781
+  revision: 2882bc08bae2acba9e8f55a726d4c685760c16b2
   specs:
     alf (0.13.0)
       backports (~> 2.6)
