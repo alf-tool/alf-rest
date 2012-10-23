@@ -60,8 +60,8 @@ module Alf
             rv.tuple_extract
 
             # project tuple and coerce it
-            tuple = Tuple(self.body)
-            attrs   = rv.heading.to_attr_list & tuple.keys
+            tuple  = Tuple(self.body)
+            attrs  = rv.heading.to_attr_list & tuple.keys
             tuple  = tuple.project(attrs)
             tuple  = tuple.coerce(rv.heading.project(attrs))
 
