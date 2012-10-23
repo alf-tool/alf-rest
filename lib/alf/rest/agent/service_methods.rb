@@ -3,26 +3,6 @@ module Alf
     class Agent
       module ServiceMethods
 
-        def assert!(msg = "an assertion failed", &bl)
-          if bl
-            db_conn.assert!(msg, &bl)
-          else
-            with_restricted_relvar do |rv|
-              rv.not_empty!(msg)
-            end
-          end
-        end
-
-        def deny!(msg = "an assertion failed", &bl)
-          if bl
-            db_conn.deny!(msg, &bl)
-          else
-            with_restricted_relvar do |rv|
-              rv.empty!(msg)
-            end
-          end
-        end
-
         def get
           with_restricted_relvar do |rv|
             app.send_payload(mode==:tuple ? rv.tuple_extract : rv)

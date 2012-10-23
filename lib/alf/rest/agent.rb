@@ -1,10 +1,12 @@
 require_relative 'agent/request_methods'
 require_relative 'agent/service_methods'
+require_relative 'agent/assertion_methods'
 module Alf
   module Rest
     class Agent
       include RequestMethods
       include ServiceMethods
+      include AssertionMethods
 
       def initialize(app, config)
         @app = app
