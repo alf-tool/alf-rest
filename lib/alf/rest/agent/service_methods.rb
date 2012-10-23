@@ -41,8 +41,8 @@ module Alf
 
         def no_post(tuple)
           set_location(tuple)
-          app.status 303
-          303
+          app.status 204
+          204
         end
 
         def delete
