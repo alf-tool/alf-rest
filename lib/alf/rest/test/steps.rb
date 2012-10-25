@@ -177,7 +177,7 @@ Then /^a decoded (.*?) tuple should equal:$/ do |prototype,expected|
   client.with_relvar(prototype) do |rv|
     expected = Relation(rv.heading.coerce(expected.hashes.first))
     @decoded = Relation(rv.heading.coerce(client.payload))
-    @decoded.project(expected.attribute_list).should eq(expected)
+    @decoded.project(expected.to_attr_list).should eq(expected)
   end
 end
 
@@ -185,7 +185,7 @@ Then /^a decoded (.*?) relation should equal:$/ do |prototype,expected|
   client.with_relvar(prototype) do |rv|
     expected = Relation(rv.heading.coerce(expected.hashes))
     @decoded = Relation(rv.heading.coerce(client.payload))
-    @decoded.project(expected.attribute_list).should eq(expected)
+    @decoded.project(expected.to_attr_list).should eq(expected)
   end
 end
 
@@ -215,13 +215,13 @@ end
 Then /^its (.*?) tva should equal:$/ do |tva,expected|
   decoded  = Relation(@decoded.tuple_extract[tva.to_sym])
   expected = Relation(decoded.heading.coerce(expected.hashes))
-  decoded.project(expected.attribute_list).tuple_extract.should eq(expected.tuple_extract)
+  decoded.project(expected.to_attr_list).tuple_extract.should eq(expected.tuple_extract)
 end
 
 Then /^its (.*?) rva should equal:$/ do |rva,expected|
   decoded  = Relation(@decoded.tuple_extract[rva.to_sym])
   expected = Relation(decoded.heading.coerce(expected.hashes))
-  decoded.project(expected.attribute_list).should eq(expected)
+  decoded.project(expected.to_attr_list).should eq(expected)
 end
 
 Then /^its (.*?) rva should be empty$/ do |rva|
