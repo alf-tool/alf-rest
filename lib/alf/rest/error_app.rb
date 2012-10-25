@@ -21,6 +21,8 @@ module Alf
           handle_error(ex.http_status || 403, "forbidden")
         when Alf::CoercionError
           handle_error(ex.http_status || 400, "coercion error")
+        when Myrrha::Error, TypeError
+          handle_error(400, "coercion error")
         when JSON::ParserError
           handle_error(400, "invalid json body")
         when ->(ex){ defined?(::Sequel) && ex.is_a?(::Sequel::DatabaseError) }
