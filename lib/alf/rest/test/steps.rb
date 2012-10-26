@@ -77,6 +77,10 @@ Given /^the "(.*?)" header is "(.*?)"$/ do |k,v|
   client.header(k,v)
 end
 
+Given /^the "(.*?)" header is not set$/ do |k|
+  client.header(k,nil)
+end
+
 Given /^the "(.*?)" parameter is "(.*?)"$/ do |k,v|
   client.parameter(k.to_sym,v)
 end
