@@ -16,9 +16,8 @@ module Alf
 
             # project tuples and coerce them
             tuples  = Relation(self.body)
-            attrs   = rv.heading.to_attr_list & tuples.attribute_list
-            tuples  = tuples.project(attrs)
-            tuples  = tuples.coerce(rv.heading.project(attrs))
+            heading = rv.heading.project(tuples.to_attr_list)
+            tuples  = Relation[heading].coerce(tuples.project(heading.to_attr_list))
 
             # insert them
             ids     = rv.insert(tuples)
@@ -60,10 +59,9 @@ module Alf
             rv.tuple_extract
 
             # project tuple and coerce it
-            tuple  = Tuple(self.body)
-            attrs  = rv.heading.to_attr_list & tuple.keys
-            tuple  = tuple.project(attrs)
-            tuple  = tuple.coerce(rv.heading.project(attrs))
+            tuple   = Tuple(self.body)
+            heading = rv.heading.project(tuple.keys)
+            tuple   = Tuple[heading].coerce(tuple.project(heading.to_attr_list))
 
             # update it
             rv.update(tuple)
