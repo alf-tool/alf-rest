@@ -4,13 +4,27 @@ module Alf
     class Payload
       describe Input, "to_relation" do
 
-        let(:tuples) { [{name: "Smith"}, {name: 'Jones'}] }
         let(:payload){ json_input_payload(tuples) }
 
-        subject{ payload.to_relation }
+        context 'without heading' do
+          let(:tuples) { [{name: "Smith"}, {name: 'Jones'}] }
 
-        it 'gets the expected relation' do
-          subject.should eq(Relation(tuples))
+          subject{ payload.to_relation }
+
+          it 'gets the expected relation' do
+            subject.should eq(Relation(tuples))
+          end
+        end
+
+        context 'with a heading' do
+          let(:tuples){ [{name: "Smith", status: "200"}] }
+          let(:heading){ Heading[status: Integer] }
+
+          subject{ payload.to_relation(heading) }
+
+          it 'gets the expected relation' do
+            subject.should eq(Relation(status: 200))
+          end
         end
 
       end

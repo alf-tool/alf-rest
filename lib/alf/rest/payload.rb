@@ -10,8 +10,8 @@ module Alf
       end
       attr_reader :raw
 
-      def to_tuple
-        to_relation.tuple_extract
+      def to_tuple(heading = nil)
+        to_relation(heading).tuple_extract
       end
 
     end # class Payload
