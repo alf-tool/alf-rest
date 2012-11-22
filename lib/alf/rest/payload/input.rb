@@ -5,7 +5,10 @@ module Alf
 
         def to_relation(heading = nil)
           rel = Relation.coerce(each)
-          rel = rel.project(heading.to_attr_list).coerce(heading) if heading
+          if heading
+            commons = heading.to_attr_list & rel.heading.to_attr_list
+            rel = rel.project(commons).coerce(heading.project(commons))
+          end
           rel
         end
 

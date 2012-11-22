@@ -19,7 +19,7 @@ module Alf
         context 'with a heading' do
           let(:tuple){ {status: "200"} }
 
-          subject{ payload.to_tuple(Heading[status: Integer]) }
+          subject{ payload.to_tuple(Heading[status: Integer, city: String]) }
 
           it 'gets the expected tuple' do
             subject.should eq(Tuple(status: 200))

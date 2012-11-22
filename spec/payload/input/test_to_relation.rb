@@ -18,7 +18,7 @@ module Alf
 
         context 'with a heading' do
           let(:tuples){ [{name: "Smith", status: "200"}] }
-          let(:heading){ Heading[status: Integer] }
+          let(:heading){ Heading[status: Integer, city: String] }
 
           subject{ payload.to_relation(heading) }
 
