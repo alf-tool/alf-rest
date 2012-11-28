@@ -27,5 +27,3 @@ require_relative 'rest/helpers'
 require_relative 'rest/config'
 require_relative 'rest/error_app'
 require_relative 'rest/middleware'
-
-require_relative 'rest/agent'

@@ -1,1 +1,0 @@
-require 'alf/rest/test/steps'

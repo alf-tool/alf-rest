@@ -8,16 +8,13 @@ module Alf
       # The connection options to use
       option :connection_options, Hash, {}
 
-      # The agent class to use for RESTful operations
-      option :agent_class, Class, Rest::Agent
-
       # The error app to use when exception are catched
       option :error_app, Object, Rest::ErrorApp
 
       # Enclose all requests in a single database transaction
       option :transactional, Boolean, true
 
-      # The logger instance to use for agent-related stuff
+      # The logger instance to use for logging
       option :logger, Object, Logger.new(STDOUT)
 
       # The current database connection

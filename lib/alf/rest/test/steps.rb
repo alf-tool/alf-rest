@@ -26,10 +26,8 @@ Given /^the following (.*?) relation is mapped under (.*):$/ do |prototype, url,
   client.with_relvar(prototype) do |rv|
     rv.affect Relation(rv.heading.coerce(table.hashes))
   end
-  app.get(url) do
-    agent.relvar = prototype
-    agent.mode   = :relation
-    agent.get
+  app.rest_get(url) do
+    relvar(prototype)
   end
   app.get("#{url}/:id") do
     agent.relvar = prototype
