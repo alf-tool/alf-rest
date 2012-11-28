@@ -20,6 +20,12 @@ module Alf
                                :query,
                                :tuple_extract
 
+      def to_location(url, ids)
+        ids = ids.tuple_extract if ids.respond_to?(:tuple_extract)
+        ids = ids.to_hash.values
+        "#{url}/#{ids.join(',')}"
+      end
+
       def assert!(msg='an assertion failed', status=nil, &bl)
         db_conn.assert!(msg, &bl)
       rescue FactAssertionError => ex
@@ -39,6 +45,15 @@ module Alf
       rescue FactAssertionError => ex
         ex.http_status = status
         raise
+      end
+
+      def no_duplicate!(&bl)
+        found = relvar(&bl)
+        unless found.empty?
+          ids = found.project(found.keys.first.to_attr_list)
+          headers("Location" => to_location(request.path, ids))
+          halt(204)
+        end
       end
 
     end
