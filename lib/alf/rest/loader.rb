@@ -1,2 +1,2 @@
 require "alf"
-require "sinatra"
+require "sinatra/base"
