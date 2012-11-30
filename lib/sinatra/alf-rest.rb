@@ -40,7 +40,18 @@ module Sinatra
       end
     end
 
+    def alf_rest
+      if block_given?
+        yield(settings.alf_configuration)
+      else
+        settings.alf_configuration
+      end
+    end
+
     def self.registered(app)
+      config = Alf::Rest::Config.new
+      app.set :alf_configuration, config
+      app.use Alf::Rest::Middleware, config
       app.helpers Alf::Rest::Helpers
     end
 
