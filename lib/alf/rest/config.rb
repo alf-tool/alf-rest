@@ -38,6 +38,11 @@ module Alf
         connection.reconnect(opts)
       end
 
+      # Sets the database, coercing it if required
+      def database=(db)
+        @database = db.is_a?(Database) ? db : Alf.database(db)
+      end
+
       # Returns the default viewpoint to use
       def viewpoint
         connection_options[:default_viewpoint]
