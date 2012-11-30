@@ -38,6 +38,16 @@ module Alf
         connection.reconnect(opts)
       end
 
+      # Returns the default viewpoint to use
+      def viewpoint
+        connection_options[:default_viewpoint]
+      end
+
+      # Sets the default viewpoint on connection options
+      def viewpoint=(vp)
+        connection_options[:default_viewpoint] = vp
+      end
+
     end # class Config
   end # module Rest
 end # module Alf

@@ -3,7 +3,6 @@ module Alf
     class ErrorApp < Sinatra::Base
       include Helpers
 
-      disable :dump_errors
       disable :logging
       disable :dump_errors
       disable :raise_errors
