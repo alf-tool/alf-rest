@@ -33,7 +33,7 @@ module Alf
                        when String           then StringIO.new(io)
                        when Array            then StringIO.new(io.join)
                        else
-                         io
+                         StringIO.new(io.read)
                        end
         end
 
