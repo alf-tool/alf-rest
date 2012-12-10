@@ -30,11 +30,10 @@ module Alf
 
         def body_io
           @body_io ||= case io = raw.body
-                       when ::IO, ::StringIO then io
                        when String           then StringIO.new(io)
                        when Array            then StringIO.new(io.join)
                        else
-                         raise ArgumentError, "Unrecognized raw body `#{raw.body}`"
+                         io
                        end
         end
 
