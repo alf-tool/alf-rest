@@ -141,8 +141,16 @@ Then /^the content type should be (.*)$/ do |ct|
   client.last_response.content_type.should =~ Regexp.new(Regexp.escape(ct))
 end
 
-Then /^the Location header should not be set$/ do
-  client.last_response.location.should be_nil
+Then /^the "(.+?)" response header should be set$/ do |header|
+  client.last_response.headers[header].should_not be_nil
+end
+
+Then /^the "(.+?)" response header should not be set$/ do |header|
+  client.last_response.headers[header].should be_nil
+end
+
+Then /^the "(.+?)" response header should equal "(.*?)"$/ do |header,value|
+  client.last_response.headers[header].should eq(value)
 end
 
 Given /^I follow the specified Location$/ do
