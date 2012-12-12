@@ -23,6 +23,9 @@ module Alf
             when Hash, Tuple                      then Relation.coerce(h).to_text
             else                                  h.to_s
             end
+          when /yaml/
+            content_type "text/yaml"
+            h.to_yaml
           else
             content_type :json
             JSON.dump(h)
