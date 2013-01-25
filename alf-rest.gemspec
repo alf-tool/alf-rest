@@ -18,6 +18,10 @@ Gem::Specification.new do |s|
   s.add_development_dependency("rake", "~> 0.9.2")
   s.add_development_dependency("rspec", "~> 2.10")
   s.add_development_dependency("rack-test", "~> 0.6.1")
-  s.add_dependency("alf", "~> 0.13.0")
+  s.add_development_dependency("cucumber", "~> 1.2")
+  s.add_development_dependency("alf-sequel", "~> 0.13.0")
+  s.add_development_dependency("sqlite3", "~> 1.3")
+  s.add_development_dependency("jdbc-sqlite3", "~> 3.7")
+  s.add_dependency("alf-core", "~> 0.13.0")
   s.add_dependency("sinatra", "~> 1.3")
 end

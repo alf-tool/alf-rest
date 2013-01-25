@@ -1,5 +1,3 @@
-require 'json'
-require 'logger'
 require_relative 'rest/version'
 require_relative 'rest/loader'
 require_relative 'rest/errors'

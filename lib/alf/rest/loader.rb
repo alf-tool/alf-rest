@@ -1,2 +1,4 @@
-require "alf"
-require "sinatra/base"
+require 'json'
+require 'logger'
+require "alf-core"
+require "sinatra"

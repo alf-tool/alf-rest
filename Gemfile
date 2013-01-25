@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
 group :runtime do
-  gem "alf", :git => "git://github.com/alf-tool/alf"
-  #gem "alf", :path => "../alf"
+  gem "alf-core", :git => "git://github.com/alf-tool/alf-core"
+  #gem "alf-core", :path => "../alf-core"
   gem "sinatra", "~> 1.3", ">= 1.3.2"
 end
 
