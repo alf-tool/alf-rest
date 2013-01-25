@@ -17,7 +17,7 @@ module Sinatra
         ids     = ids.tuple_extract if Relation===ids
         ids     = ids.to_hash.values
         status 201
-        headers("Location" => "#{url}/#{ids.join(',')}")
+        headers("Location" => "#{request.path}/#{ids.join(',')}")
       end
     end
 
