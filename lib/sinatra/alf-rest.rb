@@ -24,9 +24,9 @@ module Sinatra
     def rest_delete(url, heading, &bl)
       delete(url) do
         body = Tuple[heading].coerce(params.select{|k| heading[k.to_sym]})
-        instance_exec(body, &bl)
+        res = instance_exec(body, &bl)
         status 204
-        headers("Location" => request.path)
+        headers("Location" => request.path) unless res.nil?
       end
     end
 
