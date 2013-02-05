@@ -41,19 +41,8 @@ module Alf
         end
       end
 
-      context 'when an error_app is set' do
-        let(:app){ mock_app{|cfg|
-          cfg.error_app = ->(env){ [500, {}, ["error"]] } 
-        } }
-
-        it 'delegates to the Error application when something goes wrong' do
-          get '/generate-error'
-          last_response.body.should eq("error")
-        end
-      end
-
-      context 'when no error_app is set' do
-        let(:app){ mock_app{|cfg| cfg.error_app = nil } }
+      context 'when an error occurs' do
+        let(:app){ mock_app }
 
         it 'raises the Error outside the app' do
           lambda{ get '/generate-error' }.should raise_error(/blah/)

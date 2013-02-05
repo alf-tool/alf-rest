@@ -23,5 +23,4 @@ require_relative 'rest/payload'
 require_relative 'rest/helpers'
 
 require_relative 'rest/config'
-require_relative 'rest/error_app'
 require_relative 'rest/middleware'

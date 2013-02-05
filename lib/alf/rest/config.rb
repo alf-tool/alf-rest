@@ -8,9 +8,6 @@ module Alf
       # The connection options to use
       option :connection_options, Hash, {}
 
-      # The error app to use when exception are catched
-      option :error_app, Object, Rest::ErrorApp
-
       # Enclose all requests in a single database transaction
       option :transactional, Boolean, true
 
