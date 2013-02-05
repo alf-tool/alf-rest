@@ -29,21 +29,21 @@ module Alf
       def assert!(msg='an assertion failed', status=nil, &bl)
         db_conn.assert!(msg, &bl)
       rescue FactAssertionError => ex
-        ex.http_status = status
+        ex.http_error_status = status
         raise
       end
 
       def deny!(msg='an assertion failed', status=nil, &bl)
         db_conn.deny!(msg, &bl)
       rescue FactAssertionError => ex
-        ex.http_status = status
+        ex.http_error_status = status
         raise
       end
 
       def fact!(msg='an assertion failed', status=nil, &bl)
         db_conn.fact!(msg, &bl)
       rescue FactAssertionError => ex
-        ex.http_status = status
+        ex.http_error_status = status
         raise
       end
 
