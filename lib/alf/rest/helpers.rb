@@ -2,7 +2,6 @@ module Alf
   module Rest
     module Helpers
       extend Forwardable
-      include Payload::Server
 
       def alf_config
         env[Rest::RACK_CONFIG_KEY]
@@ -24,6 +23,10 @@ module Alf
         ids = ids.tuple_extract if ids.respond_to?(:tuple_extract)
         ids = ids.to_hash.values
         "#{url}/#{ids.join(',')}"
+      end
+
+      def send_payload(payload, *args)
+        Payload.new(payload).to_rack_response(env, *args)
       end
 
       def assert!(msg='an assertion failed', status=nil, &bl)
