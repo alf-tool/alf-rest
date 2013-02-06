@@ -11,27 +11,6 @@ module Alf
           end
         end
 
-        def send_payload(h)
-          case c = env['HTTP_ACCEPT']
-          when /json/
-            content_type :json
-            JSON.dump(h)
-          when /text\/plain/
-            content_type "text/plain"
-            case h
-            when ->(x){ x.respond_to?(:to_text) } then h.to_text
-            when Hash, Tuple                      then Relation.coerce(h).to_text
-            else                                  h.to_s
-            end
-          when /yaml/
-            content_type "text/yaml"
-            h.to_yaml
-          else
-            content_type :json
-            JSON.dump(h)
-          end
-        end
-
       end # module Server
     end # class Payload
   end # module Rest
