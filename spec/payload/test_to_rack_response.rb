@@ -32,6 +32,16 @@ module Alf
           end
         end
 
+        context 'when the content-type is specified as any' do
+          let(:env){ {'HTTP_ACCEPT' => "*/*"} }
+
+          it 'should be the expected JSON-based response' do
+            status.should eq(200)
+            content_type.should eq('application/json')
+            body.should eq([raw.to_json])
+          end
+        end
+
         context 'when the content-type is specified as text/plain' do
           let(:env){ {'HTTP_ACCEPT' => "text/plain"} }
 
