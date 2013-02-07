@@ -173,6 +173,10 @@ Then /^the body should be a JSON object$/ do
   client.payload.should be_a(Hash)
 end
 
+Then /^the body should equal "(.*?)"$/ do |expected|
+  client.last_response.body.should eq(expected)
+end
+
 Then /^the body contains "(.*?)"$/ do |expected|
   client.last_response.body.should match(Regexp.compile(Regexp.escape(expected)))
 end
