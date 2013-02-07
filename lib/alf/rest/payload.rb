@@ -26,9 +26,9 @@ module Alf
           Alf::Renderer.by_mime_type(mime_type, raw).each
         else
           case env['HTTP_ACCEPT']
-          when NilClass, /json/, "*/*" then [ raw.to_json ]
-          when /yaml/                  then [ raw.to_yaml ]
-          when /text\/plain/           then [ raw.to_s    ]
+          when NilClass, /json/, "*/*" then [ raw.to_json, "\n" ]
+          when /yaml/                  then [ raw.to_yaml, "\n" ]
+          when /text\/plain/           then [ raw.to_s,    "\n" ]
           else
             raise UnsupportedMimeTypeError, "Unsupported MIME type `#{mime_type}`"
           end
