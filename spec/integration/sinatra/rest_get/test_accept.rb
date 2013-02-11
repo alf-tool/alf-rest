@@ -81,6 +81,18 @@ module Alf
         last_response.body.should =~ /- :sid: 1/
       end
 
+      it 'supports a charset specification' do
+        #
+        header "Accept", "application/json; charset=UTF-8"
+        get '/suppliers'
+        #
+        last_meta.should eq([200, "application/json"])
+        #
+        result = JSON.load(last_response.body)
+        result.should be_a(Array)
+        result.size.should eq(5)
+      end
+
     end
   end
 end

@@ -4,6 +4,7 @@ group :runtime do
   gem "alf-core", :git => "git://github.com/alf-tool/alf-core"
   #gem "alf-core", :path => "../alf-core"
   gem "sinatra", "~> 1.3", ">= 1.3.2"
+  gem "rack-accept", "~> 0.4.5"
 end
 
 group :development do
