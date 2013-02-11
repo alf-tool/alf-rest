@@ -81,9 +81,9 @@ module Alf
         last_response.body.should =~ /- :sid: 1/
       end
 
-      it 'supports a charset specification' do
+      it 'supports a complex specification' do
         #
-        header "Accept", "application/json; charset=UTF-8"
+        header "Accept", "application/*, text/*;q=0.8"
         get '/suppliers'
         #
         last_meta.should eq([200, "application/json"])

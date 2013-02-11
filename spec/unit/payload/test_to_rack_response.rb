@@ -28,7 +28,7 @@ module Alf
           it 'should be the expected JSON-based response' do
             status.should eq(200)
             content_type.should eq('application/json')
-            body.should eq([raw.to_json] + ["\n"])
+            body.to_a.should eq([raw.to_json] + ["\n"])
           end
         end
 
@@ -38,7 +38,7 @@ module Alf
           it 'should be the expected JSON-based response' do
             status.should eq(200)
             content_type.should eq('application/json')
-            body.should eq([raw.to_json] + ["\n"])
+            body.to_a.should eq([raw.to_json] + ["\n"])
           end
         end
 
@@ -48,7 +48,7 @@ module Alf
           it 'should be the expected plain-text response' do
             status.should eq(200)
             content_type.should eq('text/plain')
-            body.should eq([raw.to_s] + ["\n"])
+            body.to_a.join.should =~ /an error message/
           end
         end
 
@@ -58,7 +58,7 @@ module Alf
           it 'should be the expected JSON-based response' do
             status.should eq(200)
             content_type.should eq('application/json')
-            body.should eq([raw.to_json] + ["\n"])
+            body.to_a.should eq([raw.to_json] + ["\n"])
           end
         end
 
@@ -68,7 +68,7 @@ module Alf
           it 'should raise an exeption' do
             lambda{
               subject
-            }.should raise_error(Alf::UnsupportedMimeTypeError)
+            }.should raise_error(Rack::Accept::Context::AcceptError)
           end
         end
       end
