@@ -5,7 +5,7 @@ module Sinatra
     def rest_get(url, &bl)
       get(url) do
         payload = instance_exec(&bl)
-        Payload.new(payload).to_rack_reponse
+        send_payload(payload)
       end
     end
 

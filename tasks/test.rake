@@ -1,9 +1,17 @@
 require "rspec/core/rake_task"
 
-desc "Run tests"
-RSpec::Core::RakeTask.new("test:unit".to_sym) do |t|
+desc "Run unit tests"
+RSpec::Core::RakeTask.new(:"test:unit") do |t|
   t.ruby_opts  = ["-I spec/unit"]
   t.rspec_opts = ["--color", "--backtrace"]
   t.pattern    = "spec/unit/**/test_*.rb"
-  t.rspec_opts = ["--color"]
 end
+
+desc "Run integration tests"
+RSpec::Core::RakeTask.new(:"test:integration") do |t|
+  t.ruby_opts  = ["-Ilib", "-I spec/integration"]
+  t.rspec_opts = ["--color", "--backtrace"]
+  t.pattern    = "spec/integration/**/test_*.rb"
+end
+
+task :test => [:"test:unit", :"test:integration"]
