@@ -7,9 +7,8 @@ group :runtime do
 end
 
 group :development do
-  gem "rake", "~> 0.9.2"
-  gem "rspec", "~> 2.10"
-  gem "letters"
+  gem "rake",  "~> 10.0"
+  gem "rspec", "~> 2.12"
 end
 
 group :test do

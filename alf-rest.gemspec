@@ -15,8 +15,8 @@ Gem::Specification.new do |s|
   s.files = File.readlines(File.join(here, 'Manifest.txt')).
                  inject([]){|files, pattern| files + Dir[File.join(here, pattern.strip)]}.
                  collect{|x| x[(1+here.size)..-1]}
-  s.add_development_dependency("rake", "~> 0.9.2")
-  s.add_development_dependency("rspec", "~> 2.10")
+  s.add_development_dependency("rake", "~> 10.0")
+  s.add_development_dependency("rspec", "~> 2.12")
   s.add_development_dependency("rack-test", "~> 0.6.1")
   s.add_development_dependency("cucumber", "~> 1.2")
   s.add_development_dependency("alf-sequel", "~> 0.13.0")
