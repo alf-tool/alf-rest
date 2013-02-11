@@ -28,7 +28,7 @@ module Alf
           it 'should be the expected JSON-based response' do
             status.should eq(200)
             content_type.should eq('application/json')
-            body.should eq([raw.to_json])
+            body.should eq([raw.to_json] + ["\n"])
           end
         end
 
@@ -38,7 +38,7 @@ module Alf
           it 'should be the expected JSON-based response' do
             status.should eq(200)
             content_type.should eq('application/json')
-            body.should eq([raw.to_json])
+            body.should eq([raw.to_json] + ["\n"])
           end
         end
 
@@ -48,7 +48,7 @@ module Alf
           it 'should be the expected plain-text response' do
             status.should eq(200)
             content_type.should eq('text/plain')
-            body.should eq([raw.to_s])
+            body.should eq([raw.to_s] + ["\n"])
           end
         end
 
@@ -58,7 +58,7 @@ module Alf
           it 'should be the expected JSON-based response' do
             status.should eq(200)
             content_type.should eq('application/json')
-            body.should eq([raw.to_json])
+            body.should eq([raw.to_json] + ["\n"])
           end
         end
 
