@@ -14,7 +14,8 @@ module Sinatra
         payload = Alf::Rest::Payload::Input.new(request)
         body    = payload.to_tuple(Alf::Heading.coerce(heading))
         ids     = instance_exec(body, &bl)
-        ids     = ids.tuple_extract if Relation===ids
+        ids     = ids.matching_relation if Alf::Sequel::UnitOfWork::Insert === ids
+        ids     = ids.tuple_extract     if Relation === ids
         ids     = ids.to_hash.values
         status 201
         headers("Location" => "#{request.path}/#{ids.join(',')}")
