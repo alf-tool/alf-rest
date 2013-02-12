@@ -20,7 +20,8 @@ module Alf
                                :tuple_extract
 
       def to_location(url, ids)
-        ids = ids.tuple_extract if ids.respond_to?(:tuple_extract)
+        ids = ids.matching_relation if ids.respond_to?(:matching_relation)
+        ids = ids.tuple_extract     if ids.respond_to?(:tuple_extract)
         ids = ids.to_hash.values
         "#{url}/#{ids.join(',')}"
       end
