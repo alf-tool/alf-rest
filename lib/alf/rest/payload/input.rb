@@ -25,7 +25,9 @@ module Alf
         end
 
         def content_type
-          raw.content_type
+          ct = raw.content_type
+          ct = $1 if ct =~ /^(.*?);/
+          ct
         end
 
         def body_io
