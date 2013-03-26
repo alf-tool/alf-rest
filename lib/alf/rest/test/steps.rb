@@ -247,3 +247,29 @@ Then /^its (.*?) rva should have size (\d+)$/ do |rva,size|
   tuple = @decoded.tuple_extract
   tuple[rva.to_sym].size.should eq(Integer(size))
 end
+
+Then /^it should be a '(.*?)' response$/ do |kind|
+  statuses = {
+    'created'  => 201,
+    'updated'  => 200,
+    'deleted'  => 200,
+    'skipped'  => 200,
+    'tuple'    => 200,
+    'relation' => 200
+  }
+  lr = client.last_response
+  lr.status.should eq(statuses[kind])
+  body = JSON.parse(lr.body)
+  case kind
+  when 'tuple'
+    client.payload.should be_a(Hash)
+    @decoded = Relation(client.payload)
+  when 'relation'
+    client.payload.should be_a(Array)
+    @decoded = Relation(client.payload)
+  when 'created', 'updated', 'deleted', 'skipped'
+    body.should eq('status' => 'success', 'message' => kind)
+  else
+    raise "Unexpected response kind `#{kind}`"
+  end
+end

@@ -13,21 +13,13 @@ module Sinatra
       post(url) do
         payload = Alf::Rest::Payload::Input.new(request)
         body    = payload.to_tuple(Alf::Heading.coerce(heading))
-        ids     = instance_exec(body, &bl)
-        ids     = ids.matching_relation if Alf::Sequel::UnitOfWork::Insert === ids
-        ids     = ids.tuple_extract     if Relation === ids
-        ids     = ids.to_hash.values
-        status 201
-        headers("Location" => "#{request.path}/#{ids.join(',')}")
-      end
-    end
-
-    def rest_delete(url, heading, &bl)
-      delete(url) do
-        body = Tuple[heading].coerce(params.select{|k| heading[k.to_sym]})
-        res = instance_exec(body, &bl)
-        status 204
-        headers("Location" => request.path) unless res.nil?
+        result  = instance_exec(body, &bl)
+        status  = result.rack_status
+        body    = result.rack_body
+        unless location_set?
+          headers("Location" => result.rack_location(request))
+        end
+        send_payload(body, status)
       end
     end
 
@@ -35,9 +27,26 @@ module Sinatra
       put(url) do
         payload = Alf::Rest::Payload::Input.new(request)
         body    = payload.to_tuple(Alf::Heading.coerce(heading))
-        instance_exec(body, &bl)
-        status 200
-        headers("Location" => request.path)
+        result  = instance_exec(body, &bl)
+        status  = result.rack_status
+        body    = result.rack_body
+        unless location_set?
+          headers("Location" => request.path)
+        end
+        send_payload(body, status)
+      end
+    end
+
+    def rest_delete(url, heading, &bl)
+      delete(url) do
+        body   = Tuple[heading].coerce(params.select{|k| heading[k.to_sym]})
+        result = instance_exec(body, &bl)
+        status  = result.rack_status
+        body    = result.rack_body
+        unless location_set?
+          headers("Location" => result.rack_location(request))
+        end
+        send_payload(body, status)
       end
     end
 

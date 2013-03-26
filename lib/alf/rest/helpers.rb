@@ -59,8 +59,9 @@ module Alf
         found = relvar(&bl)
         unless found.empty?
           ids = found.project(found.keys.first.to_attr_list)
-          headers("Location" => to_location(request.path, ids))
-          halt(204)
+          s, h, b = send_payload({'status' => 'success', 'message' => 'skipped'}, 200)
+          h = h.merge("Location" => to_location(request.path, ids))
+          halt([s, h, b])
         end
       end
 

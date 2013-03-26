@@ -2,6 +2,7 @@ require_relative 'rest/version'
 require_relative 'rest/loader'
 require_relative 'rest/errors'
 require_relative 'rest/alf-ext/renderer'
+require_relative 'rest/alf-ext/unit_of_work'
 module Alf
   module Rest
 
