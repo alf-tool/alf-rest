@@ -4,7 +4,7 @@ module Alf
       class Input < Payload
 
         def to_relation(heading = nil)
-          rel = Relation.coerce(each)
+          rel = Relation.coerce(each.to_a)
           if heading
             commons = heading.to_attr_list & rel.heading.to_attr_list
             rel = rel.project(commons).coerce(heading.project(commons))
