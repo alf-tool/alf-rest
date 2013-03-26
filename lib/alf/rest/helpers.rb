@@ -26,6 +26,10 @@ module Alf
         "#{url}/#{ids.join(',')}"
       end
 
+      def location_set?
+        response.headers["Location"]
+      end
+
       def send_payload(payload, *args)
         Payload.new(payload).to_rack_response(env, *args)
       end
