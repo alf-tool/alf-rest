@@ -250,12 +250,16 @@ end
 
 Then /^it should be a '(.*?)' response$/ do |kind|
   statuses = {
-    'created'  => 201,
-    'updated'  => 200,
-    'deleted'  => 200,
-    'skipped'  => 200,
-    'tuple'    => 200,
-    'relation' => 200
+    'created'      => 201,
+    'updated'      => 200,
+    'deleted'      => 200,
+    'skipped'      => 200,
+    'tuple'        => 200,
+    'relation'     => 200,
+    'client-error' => 400,
+    'unauthorized' => 401,
+    'forbidden'    => 403,
+    'not-found'    => 404,
   }
   lr = client.last_response
   lr.status.should eq(statuses[kind])
@@ -269,6 +273,11 @@ Then /^it should be a '(.*?)' response$/ do |kind|
     @decoded = Relation(client.payload)
   when 'created', 'updated', 'deleted', 'skipped'
     body.should eq('status' => 'success', 'message' => kind)
+    @decoded = Relation(client.payload)
+  when 'not-found', 'client-error', 'forbidden', 'unauthorized'
+    body['status'].should eq(kind)
+    body['message'].should_not be_nil
+    client.last_response.location.should be_nil
   else
     raise "Unexpected response kind `#{kind}`"
   end
