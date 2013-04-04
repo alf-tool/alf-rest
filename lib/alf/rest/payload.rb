@@ -18,7 +18,7 @@ module Alf
         if renderer = Alf::Renderer.from_http_accept(accept)
           [ status,
             {'Content-Type' => renderer.mime_type},
-            renderer.new(raw).each ]
+            renderer.new(raw).each.to_a ]
         else
           raise Rack::Accept::Context::AcceptError, accept
         end
