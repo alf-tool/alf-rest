@@ -4,49 +4,50 @@ module Sinatra
 
     def rest_get(url, &bl)
       get(url) do
-        payload = instance_exec(&bl)
-        send_payload(payload)
+        Alf::Rest::Response.new(env){|r|
+          r.body = instance_exec(&bl)
+        }.finish
       end
     end
 
     def rest_post(url, heading, &bl)
       post(url) do
         payload = Alf::Rest::Payload::Input.new(request)
-        body    = payload.to_tuple(Alf::Heading.coerce(heading))
-        result  = instance_exec(body, &bl)
-        status  = result.rack_status
-        body    = result.rack_body
-        unless location_set?
-          headers("Location" => result.rack_location(request))
-        end
-        send_payload(body, status)
+        input   = payload.to_tuple(Alf::Heading.coerce(heading))
+        result  = instance_exec(input, &bl)
+
+        Alf::Rest::Response.new(env){|r|
+          r.status = result.rack_status
+          r.body   = result.rack_body
+          r["Location"] = result.rack_location(request) unless location_set?
+        }.finish
       end
     end
 
     def rest_put(url, heading, &bl)
       put(url) do
         payload = Alf::Rest::Payload::Input.new(request)
-        body    = payload.to_tuple(Alf::Heading.coerce(heading))
-        result  = instance_exec(body, &bl)
-        status  = result.rack_status
-        body    = result.rack_body
-        unless location_set?
-          headers("Location" => request.path)
-        end
-        send_payload(body, status)
+        input   = payload.to_tuple(Alf::Heading.coerce(heading))
+        result  = instance_exec(input, &bl)
+
+        Alf::Rest::Response.new(env){|r|
+          r.status = result.rack_status
+          r.body   = result.rack_body
+          r["Location"] = request.path unless location_set?
+        }.finish
       end
     end
 
     def rest_delete(url, heading, &bl)
       delete(url) do
-        body   = Tuple[heading].coerce(params.select{|k| heading[k.to_sym]})
-        result = instance_exec(body, &bl)
-        status  = result.rack_status
-        body    = result.rack_body
-        unless location_set?
-          headers("Location" => result.rack_location(request))
-        end
-        send_payload(body, status)
+        input  = Tuple[heading].coerce(params.select{|k| heading[k.to_sym]})
+        result = instance_exec(input, &bl)
+
+        Alf::Rest::Response.new(env){|r|
+          r.status = result.rack_status
+          r.body   = result.rack_body
+          r["Location"] = result.rack_location(request) unless location_set?
+        }.finish
       end
     end
 

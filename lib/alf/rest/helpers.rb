@@ -30,10 +30,6 @@ module Alf
         response.headers["Location"]
       end
 
-      def send_payload(payload, *args)
-        Payload.new(payload).to_rack_response(env, *args)
-      end
-
       def assert!(msg='an assertion failed', status=nil, &bl)
         db_conn.assert!(msg, &bl)
       rescue FactAssertionError => ex
@@ -59,9 +55,11 @@ module Alf
         found = relvar(&bl)
         unless found.empty?
           ids = found.project(found.keys.first.to_attr_list)
-          s, h, b = send_payload({'status' => 'success', 'message' => 'skipped'}, 200)
-          h = h.merge("Location" => to_location(request.path, ids))
-          halt([s, h, b])
+          halt Alf::Rest::Response.new(env){|r|
+            r.status = 200
+            r.body = {'status' => 'success', 'message' => 'skipped'}
+            r["Location"] = to_location(request.path, ids)
+          }.finish
         end
       end
 

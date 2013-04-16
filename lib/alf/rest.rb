@@ -22,6 +22,7 @@ module Alf
   end # module Rest
 end # module Alf
 require_relative 'rest/payload'
+require_relative 'rest/response'
 require_relative 'rest/helpers'
 
 require_relative 'rest/config'

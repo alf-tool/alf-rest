@@ -12,10 +12,6 @@ module Alf
         end
 
         def rack_location(request)
-          request.path
-        end
-
-        def rack_location(request)
           ids = pk_matching_relation.tuple_extract.to_hash.values
           "#{request.path}/#{ids.join(',')}"
         end
