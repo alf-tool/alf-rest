@@ -12,7 +12,7 @@ module Helpers
 
   def json_post_env(tuples)
     env = env_for("/foo", method: 'POST', input: JSON.dump(tuples))
-    env.merge('CONTENT_TYPE' => 'application/json')
+    env.merge('CONTENT_TYPE' => 'application/json;charset=UTF-8')
   end
 
   def json_post_request(tuples)

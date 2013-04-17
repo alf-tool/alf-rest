@@ -25,7 +25,7 @@ module Alf
         if form_data?
           yield(Support.symbolize_keys(self.POST))
         else
-          Alf::Reader.by_mime_type(content_type, body).each(&bl)
+          Alf::Reader.by_mime_type(media_type, body).each(&bl)
         end
       end
 
