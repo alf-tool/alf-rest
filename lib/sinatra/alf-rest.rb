@@ -12,8 +12,7 @@ module Sinatra
 
     def rest_post(url, heading, &bl)
       post(url) do
-        payload = Alf::Rest::Payload::Input.new(request)
-        input   = payload.to_tuple(Alf::Heading.coerce(heading))
+        input   = Alf::Rest::Request.new(env, heading).to_tuple
         result  = instance_exec(input, &bl)
 
         Alf::Rest::Response.new(env){|r|
@@ -26,8 +25,7 @@ module Sinatra
 
     def rest_put(url, heading, &bl)
       put(url) do
-        payload = Alf::Rest::Payload::Input.new(request)
-        input   = payload.to_tuple(Alf::Heading.coerce(heading))
+        input   = Alf::Rest::Request.new(env, heading).to_tuple
         result  = instance_exec(input, &bl)
 
         Alf::Rest::Response.new(env){|r|
