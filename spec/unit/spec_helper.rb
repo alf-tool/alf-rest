@@ -19,10 +19,6 @@ module Helpers
     Rack::Request.new(json_post_env(tuples))
   end
 
-  def json_input_payload(tuples)
-    Alf::Rest::Payload::Input.new(json_post_request(tuples))
-  end
-
   def mock_app(&bl)
     Class.new(Sinatra::Base){
       register Alf::Rest
