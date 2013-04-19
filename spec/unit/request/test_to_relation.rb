@@ -18,6 +18,19 @@ module Alf
         end
       end
 
+      context 'with a body conforming to Rack spec strictly' do
+        let(:env)  { json_post_env(tuple) }
+        let(:tuple){ {city: "London", status: "200"} }
+
+        before do
+          env['rack.input'] = Struct.new(:read, :rewind).new(env['rack.input'].read)
+        end
+
+        it 'gets the iterated tuples from POST' do
+          subject.should eq(Relation(city: "London", status: 200))
+        end
+      end
+
       context 'with a JSON encoded body' do
         let(:env){ json_post_env(tuples) }
 
