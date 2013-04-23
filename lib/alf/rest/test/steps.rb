@@ -263,6 +263,7 @@ Then /^it should be a '(.*?)' response$/ do |kind|
   }
   lr = client.last_response
   lr.status.should eq(statuses[kind])
+  client.last_response.headers["Content-Type"].should eq("application/json")
   body = JSON.parse(lr.body)
   case kind
   when 'tuple'
