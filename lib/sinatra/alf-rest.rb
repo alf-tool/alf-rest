@@ -18,7 +18,9 @@ module Sinatra
         Alf::Rest::Response.new(env){|r|
           r.status = result.rack_status
           r.body   = result.rack_body
-          r["Location"] = result.rack_location(request) unless location_set?
+          if not(location_set?) and (loc = result.rack_location(request))
+            r["Location"] = loc
+          end
         }.finish
       end
     end
@@ -44,7 +46,9 @@ module Sinatra
         Alf::Rest::Response.new(env){|r|
           r.status = result.rack_status
           r.body   = result.rack_body
-          r["Location"] = result.rack_location(request) unless location_set?
+          if not(location_set?) and (loc = result.rack_location(request))
+            r["Location"] = loc
+          end
         }.finish
       end
     end
