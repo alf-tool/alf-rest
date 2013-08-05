@@ -32,7 +32,9 @@ module Alf
       def body_io
         case body
         when IO, StringIO then body
-        else StringIO.new(body.read)
+        else
+          body.rewind if body.respond_to?(:rewind)
+          StringIO.new(body.read)
         end
       end
 
