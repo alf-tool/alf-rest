@@ -260,6 +260,7 @@ Then /^it should be a '(.*?)' response$/ do |kind|
     'unauthorized' => 401,
     'forbidden'    => 403,
     'not-found'    => 404,
+    'conflict'     => 409
   }
   lr = client.last_response
   lr.status.should eq(statuses[kind])
