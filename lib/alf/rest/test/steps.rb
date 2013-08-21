@@ -276,7 +276,7 @@ Then /^it should be a '(.*?)' response$/ do |kind|
   when 'created', 'updated', 'deleted', 'skipped'
     body.should eq('status' => 'success', 'message' => kind)
     @decoded = Relation(client.payload)
-  when 'not-found', 'client-error', 'forbidden', 'unauthorized'
+  when 'not-found', 'client-error', 'forbidden', 'unauthorized', 'conflict'
     body['status'].should eq(kind)
     body['message'].should_not be_nil
     client.last_response.location.should be_nil
