@@ -5,12 +5,12 @@ module Alf
 
       let(:config){ Config.new }
 
-      subject{ config.viewpoint = :vp }
+      subject{ config.viewpoint = Alf::Viewpoint::NATIVE }
 
       it 'sets it on the connection options' do
         subject
-        config.connection_options[:default_viewpoint].should eq(:vp)
-        config.viewpoint.should eq(:vp)
+        config.connection_options[:viewpoint].should be(Alf::Viewpoint::NATIVE)
+        config.viewpoint.should be(Alf::Viewpoint::NATIVE)
       end
 
     end

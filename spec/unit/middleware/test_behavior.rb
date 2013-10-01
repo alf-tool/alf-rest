@@ -16,6 +16,7 @@ module Alf
 
           class_config = nil
           use Alf::Rest do |cfg|
+            cfg.database = Alf::Database.new(Path.dir)
             class_config  = cfg
             bl.call(cfg) if bl
           end

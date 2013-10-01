@@ -1,22 +1,4 @@
 GIT
-  remote: git://github.com/alf-tool/alf-core
-  revision: 8b968b49cb24baae7c7b5c01957ef49e7855932a
-  specs:
-    alf-core (0.14.0)
-      domain (~> 1.0)
-      myrrha (~> 3.0)
-      path (~> 1.3)
-      sexpr (~> 0.5.1)
-
-GIT
-  remote: git://github.com/alf-tool/alf-sequel
-  revision: 9d7c76a82db9d3d8e15d32cd38b9f46c51c1e460
-  specs:
-    alf-sequel (0.14.0)
-      alf-core (~> 0.14.0)
-      sequel (~> 3.48)
-
-GIT
   remote: git://github.com/brynary/rack-test.git
   revision: 280ff54f50d25dd70e2ec1c55049e5ef7de126f3
   specs:
@@ -26,6 +8,14 @@ GIT
 GEM
   remote: http://rubygems.org/
   specs:
+    alf-core (0.14.0)
+      domain (~> 1.0)
+      myrrha (~> 3.0)
+      path (~> 1.3)
+      sexpr (~> 0.5.1)
+    alf-sequel (0.14.0)
+      alf-core (~> 0.14.0)
+      sequel (~> 3.48)
     builder (3.2.2)
     cucumber (1.3.5)
       builder (>= 2.1.2)
@@ -41,7 +31,7 @@ GEM
     multi_test (0.0.2)
     myrrha (3.0.0)
       domain (~> 1.0)
-    path (1.3.1)
+    path (1.3.3)
     rack (1.5.2)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -69,8 +59,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  alf-core!
-  alf-sequel!
+  alf-core (~> 0.14.0)
+  alf-sequel (~> 0.14.0)
   cucumber (~> 1.2)
   jdbc-sqlite3 (~> 3.7)
   rack-accept (~> 0.4.5)

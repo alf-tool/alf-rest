@@ -42,12 +42,12 @@ module Alf
 
       # Returns the default viewpoint to use
       def viewpoint
-        connection_options[:default_viewpoint]
+        connection_options[:viewpoint]
       end
 
       # Sets the default viewpoint on connection options
       def viewpoint=(vp)
-        connection_options[:default_viewpoint] = vp
+        connection_options[:viewpoint] = vp
       end
 
     end # class Config
