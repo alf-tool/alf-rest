@@ -4,7 +4,7 @@ group :runtime do
   gem "sinatra", "~> 1.3", ">= 1.3.2"
   gem "rack-accept", "~> 0.4.5"
 
-  gem "alf-core", path: "../alf-core"
+  gem "alf-core", git: "git://github.com/alf-tool/alf-core.git"
 end
 
 group :development do
@@ -19,6 +19,6 @@ group :test do
   gem "sqlite3", "~> 1.3",      :platforms => ['mri', 'rbx']
   gem "jdbc-sqlite3", "~> 3.7", :platforms => ['jruby']
 
-  gem "alf-sql",    path: "../alf-sql"
-  gem "alf-sequel", path: "../alf-sequel"
+  gem "alf-sql",    git: "git://github.com/alf-tool/alf-sql.git"
+  gem "alf-sequel", git: "git://github.com/alf-tool/alf-sequel.git"
 end
