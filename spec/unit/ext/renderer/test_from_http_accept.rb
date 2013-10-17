@@ -22,8 +22,8 @@ module Alf
       it{ should be(Renderer::CSV) }
     end
 
-    context 'text/x-yaml' do
-      let(:accept){ "text/x-yaml" }
+    context 'text/yaml' do
+      let(:accept){ "text/yaml" }
 
       it{ should be(Renderer::YAML) }
     end

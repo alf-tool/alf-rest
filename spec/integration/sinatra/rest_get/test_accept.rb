@@ -68,17 +68,17 @@ module Alf
         #
         last_meta.should eq([200, "text/plain"])
         #
-        last_response.body.should =~ /\|\s+1\s+\|\s+Smith\s+\|/
+        last_response.body.should =~ /\|\s+S1\s+\|\s+Smith\s+\|/
       end
 
       it 'supports text/x-yaml' do
         #
-        header "Accept", "text/x-yaml"
+        header "Accept", "text/yaml"
         get '/suppliers'
         #
-        last_meta.should eq([200, "text/x-yaml"])
+        last_meta.should eq([200, "text/yaml"])
         #
-        last_response.body.should =~ /- :sid: 1/
+        last_response.body.should =~ /- :sid: S1/
       end
 
       it 'supports a complex specification' do
