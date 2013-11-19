@@ -15,6 +15,8 @@ Gem::Specification.new do |s|
   s.files = File.readlines(File.join(here, 'Manifest.txt')).
                  inject([]){|files, pattern| files + Dir[File.join(here, pattern.strip)]}.
                  collect{|x| x[(1+here.size)..-1]}
+
+
   s.add_development_dependency("rake", "~> 10.0")
   s.add_development_dependency("rspec", "~> 2.12")
   s.add_development_dependency("rack-test", "~> 0.6.1")
@@ -22,7 +24,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency("alf-sequel", "~> 0.15.0")
   s.add_development_dependency("sqlite3", "~> 1.3")
   s.add_development_dependency("jdbc-sqlite3", "~> 3.7")
-  s.add_dependency("alf-core", "~> 0.15.0")
   s.add_dependency("sinatra", "~> 1.3")
   s.add_dependency("rack-accept", "~> 0.4.5")
+  s.add_dependency("alf-core", "0.16.0")
+
 end
