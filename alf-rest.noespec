@@ -18,7 +18,7 @@ variables:
   upper:
     Rest
   version:
-    0.16.0
+    0.16.1
   summary:
     Put your relational database on the web quickly, simply, safely.
   description: |-
