@@ -28,8 +28,8 @@ variables:
   links:
     - http://github.com/blambeau/alf
   dependencies:
-    - {name: sinatra,      version: "~> 1.3",    groups: [runtime]}
-    - {name: rack-accept,  version: "~> 0.4.5",  groups: [runtime]}
+    - {name: sinatra,      version: ">= 1.3",    groups: [runtime]}
+    - {name: rack-accept,  version: ">= 0.4.5",  groups: [runtime]}
     - {name: rake,         version: "~> 10.0",   groups: [development]}
     - {name: rspec,        version: "~> 2.12",   groups: [development]}
     - {name: rack-test,    version: "~> 0.6.1",  groups: [test]}
