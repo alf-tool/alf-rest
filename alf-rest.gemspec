@@ -26,5 +26,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency("jdbc-sqlite3", "~> 3.7")
   s.add_dependency("sinatra", ">= 1.3")
   s.add_dependency("rack-accept", ">= 0.4.5")
-  s.add_dependency("alf-core", "~> 0.17.0")
+  s.add_dependency("alf-core", "~> 0.18.0")
 end
